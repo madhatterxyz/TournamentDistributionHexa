@@ -145,11 +145,31 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         {
             //Arrange
             var adapter = new Mock<ITournamentRepository>();
+            adapter.Setup(x => x.GetAll()).Returns(new List<TournamentMatch>() {
+                new TournamentMatch() {
+                    Game = new Game()
+                    {
+                        ID = 1,
+                        Name = "Ark Nova"
+                    },
+                    Scores = new List<MatchScore>(){
+                        new MatchScore()
+                        {
+                            Player = new Player(){
+                                ID = 1,
+                                Firstname ="Nicolas",
+                                Lastname = "B",
+                                Telephone=""
+                            }
+                        }
+                    } 
+                }
+            });
             ITournamentDomain domain = new TournamentDomain(adapter.Object);
             //Act
             List<TournamentMatch> matchs = await domain.GetAll();
             //Assert
-            Assert.True(matchs.Count()==1);
+            Assert.True(matchs.Count() == 1);
         }
 
 

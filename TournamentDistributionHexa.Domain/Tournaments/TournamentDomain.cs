@@ -38,18 +38,7 @@ namespace TournamentDistributionHexa.Domain.Repositories
 
         public async Task<List<TournamentMatch>> GetAll()
         {
-            return new List<TournamentMatch>() { 
-                new TournamentMatch(){
-                    Game = new Game() {ID = 1, Name = "Ark Nova" },
-                    Scores = new List<MatchScore>()
-                    {
-                        new MatchScore()
-                        {
-                            Player = new Player(){ ID =1, Firstname = "Nicolas",Lastname="B", Telephone =""}
-                        }
-                    }
-                }
-            };
+            return _repositoryAdapter.GetAll();
         }
     }
 }
