@@ -141,13 +141,13 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         }
 
         [Fact]
-        public void GetAll_Should_Return_1_TournamentMatch()
+        public async Task GetAll_Should_Return_1_TournamentMatch()
         {
             //Arrange
             var adapter = new Mock<ITournamentRepository>();
             ITournamentDomain domain = new TournamentDomain(adapter.Object);
             //Act
-            List<TournamentMatch> matchs = domain.GetAll();
+            List<TournamentMatch> matchs = await domain.GetAll();
             //Assert
             Assert.True(matchs.Count()==1);
         }
