@@ -31,3 +31,5 @@ In this repository, I challenge myself to implement the program with practices o
 
 - NCrunch (background automated unit testing VS extension).
 
+## Prerequisites
+If you want to build the project, you may need to create the database. The schema script is present in TournamentDistributionHexa.Infrastructure/SQL Scripts.
