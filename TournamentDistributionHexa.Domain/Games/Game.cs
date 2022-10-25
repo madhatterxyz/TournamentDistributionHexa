@@ -1,4 +1,4 @@
-﻿namespace TournamentDistributionHexa.Tests
+﻿namespace TournamentDistributionHexa.Domain
 {
     public class Game
     {

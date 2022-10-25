@@ -1,4 +1,8 @@
-using System.Numerics;
+using TournamentDistributionHexa.Domain;
+using TournamentDistributionHexa.Domain.Players;
+using TournamentDistributionHexa.Domain.Repositories;
+using TournamentDistributionHexa.Domain.Score;
+using TournamentDistributionHexa.Domain.Tournament;
 
 namespace TournamentDistributionHexa.Tests
 {
@@ -8,7 +12,7 @@ namespace TournamentDistributionHexa.Tests
         public void CreateTournoi_Should_Return_10Matchs()
         {
             //Arrange
-            TournamentDomain domain = new TournamentDomain();
+            ITournamentDomain domain = new TournamentDomain();
             List<Player> players = new List<Player>() {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
                 new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
@@ -38,7 +42,7 @@ namespace TournamentDistributionHexa.Tests
         public void CreateTournoi_Should_Return_1Matchs_Per_Game()
         {
             //Arrange
-            TournamentDomain domain = new TournamentDomain();
+            ITournamentDomain domain = new TournamentDomain();
             List<Player> players = new List<Player>() {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
                 new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
@@ -79,7 +83,7 @@ namespace TournamentDistributionHexa.Tests
         public void CreateTournoi_With1Game_Should_Return_3DifferentPlayers_Per_Match()
         {
             //Arrange
-            TournamentDomain domain = new TournamentDomain();
+            ITournamentDomain domain = new TournamentDomain();
             List<Player> players = new List<Player>()
             {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},

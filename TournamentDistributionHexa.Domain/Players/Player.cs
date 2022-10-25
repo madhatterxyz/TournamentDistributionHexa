@@ -1,4 +1,4 @@
-﻿namespace TournamentDistributionHexa.Tests
+﻿namespace TournamentDistributionHexa.Domain.Players
 {
     public class Player
     {
@@ -11,7 +11,7 @@
             if (obj == null) return false;
             if (obj.GetType() != typeof(Player)) return false;
             Player other = (Player)obj;
-            return other.ID.Equals(this.ID) && other.Firstname.Equals(this.Firstname) &&other.Lastname.Equals(this.Lastname) &&other.Telephone.Equals(this.Telephone);
+            return other.ID.Equals(ID) && other.Firstname.Equals(Firstname) && other.Lastname.Equals(Lastname) && other.Telephone.Equals(Telephone);
         }
     }
 }

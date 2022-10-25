@@ -1,6 +1,10 @@
-﻿namespace TournamentDistributionHexa.Tests
+﻿using TournamentDistributionHexa.Domain.Players;
+using TournamentDistributionHexa.Domain.Score;
+using TournamentDistributionHexa.Domain.Tournament;
+
+namespace TournamentDistributionHexa.Domain.Repositories
 {
-    public class TournamentDomain
+    public class TournamentDomain : ITournamentDomain
     {
         public const int NUMBER_PLAYERS_PER_MATCH = 3;
         public List<TournamentMatch> Create(List<Player> players, List<Game> games)
