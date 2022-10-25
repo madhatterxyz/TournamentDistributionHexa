@@ -2,7 +2,7 @@
 
 namespace TournamentDistributionHexa.Domain.Tournaments
 {
-    public interface ITournamentRepositoryAdapter
+    public interface ITournamentRepository
     {
         void Create(List<TournamentMatch> list);
     }

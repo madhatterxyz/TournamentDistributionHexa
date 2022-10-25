@@ -22,7 +22,7 @@ namespace TournamentDistributionHexa.Tests.IntegrationTests
             InitializeInMemoryDatabaseData(options);
             using (var _context = new RepartitionTournoiContext(options))
             {
-                ITournamentRepositoryAdapter domain = new TournamentRepository(_context);
+                ITournamentRepository domain = new TournamentRepositoryAdapter(_context);
                 List<Player> players = new List<Player>()
             {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},

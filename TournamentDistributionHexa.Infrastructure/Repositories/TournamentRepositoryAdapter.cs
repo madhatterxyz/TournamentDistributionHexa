@@ -5,10 +5,10 @@ using TournamentDistributionHexa.Infrastructure.Models;
 
 namespace TournamentDistributionHexa.Infrastructure.Repositories
 {
-    public class TournamentRepository : ITournamentRepositoryAdapter
+    public class TournamentRepositoryAdapter : ITournamentRepository
     {
         private RepartitionTournoiContext _context;
-        public TournamentRepository(RepartitionTournoiContext context)
+        public TournamentRepositoryAdapter(RepartitionTournoiContext context)
         {
             _context = context;
         }

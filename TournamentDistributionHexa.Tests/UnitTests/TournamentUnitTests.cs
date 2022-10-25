@@ -16,8 +16,8 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         public void CreateTournoi_Should_Return_10Matchs()
         {
             //Arrange
-            var adapter = new Mock<ITournamentRepositoryAdapter>();
-            ITournamentDomainAdapter domain = new TournamentDomain(adapter.Object);
+            var adapter = new Mock<ITournamentRepository>();
+            ITournamentDomain domain = new TournamentDomain(adapter.Object);
             List<Player> players = new List<Player>() {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
                 new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
@@ -47,8 +47,8 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         public void CreateTournoi_Should_Return_1Matchs_Per_Game()
         {
             //Arrange
-            var adapter = new Mock<ITournamentRepositoryAdapter>();
-            ITournamentDomainAdapter domain = new TournamentDomain(adapter.Object);
+            var adapter = new Mock<ITournamentRepository>();
+            ITournamentDomain domain = new TournamentDomain(adapter.Object);
             List<Player> players = new List<Player>() {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
                 new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
@@ -89,8 +89,8 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         public void CreateTournoi_With1Game_Should_Return_3DifferentPlayers_Per_Match()
         {
             //Arrange
-            var adapter = new Mock<ITournamentRepositoryAdapter>();
-            ITournamentDomainAdapter domain = new TournamentDomain(adapter.Object);
+            var adapter = new Mock<ITournamentRepository>();
+            ITournamentDomain domain = new TournamentDomain(adapter.Object);
             List<Player> players = new List<Player>()
             {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
@@ -139,6 +139,19 @@ namespace TournamentDistributionHexa.Tests.UnitTests
             //Assert
             Assert.True(expectedMatchs.SequenceEqual(matchs));
         }
+
+        [Fact]
+        public void GetAll_Should_Return_1_TournamentMatch()
+        {
+            //Arrange
+            var adapter = new Mock<ITournamentRepository>();
+            ITournamentDomain domain = new TournamentDomain(adapter.Object);
+            //Act
+            List<TournamentMatch> matchs = domain.GetAll();
+            //Assert
+            Assert.True(matchs.Count()==1);
+        }
+
 
     }
 

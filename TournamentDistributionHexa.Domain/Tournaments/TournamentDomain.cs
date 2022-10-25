@@ -5,11 +5,11 @@ using TournamentDistributionHexa.Domain.Tournaments;
 
 namespace TournamentDistributionHexa.Domain.Repositories
 {
-    public class TournamentDomain : ITournamentDomainAdapter
+    public class TournamentDomain : ITournamentDomain
     {
         public const int NUMBER_PLAYERS_PER_MATCH = 3;
-        private readonly ITournamentRepositoryAdapter _repositoryAdapter;
-        public TournamentDomain(ITournamentRepositoryAdapter tournamentRepositoryAdapter)
+        private readonly ITournamentRepository _repositoryAdapter;
+        public TournamentDomain(ITournamentRepository tournamentRepositoryAdapter)
         {
             _repositoryAdapter = tournamentRepositoryAdapter;
         }
@@ -34,6 +34,22 @@ namespace TournamentDistributionHexa.Domain.Repositories
             }
             _repositoryAdapter.Create(list);
             return list;
+        }
+
+        public async Task<List<TournamentMatch>> GetAll()
+        {
+            return new List<TournamentMatch>() { 
+                new TournamentMatch(){
+                    Game = new Game() {ID = 1, Name = "Ark Nova" },
+                    Scores = new List<MatchScore>()
+                    {
+                        new MatchScore()
+                        {
+                            Player = new Player(){ ID =1, Firstname = "Nicolas",Lastname="B", Telephone =""}
+                        }
+                    }
+                }
+            };
         }
     }
 }

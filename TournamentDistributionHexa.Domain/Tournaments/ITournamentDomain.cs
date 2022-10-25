@@ -3,8 +3,9 @@ using TournamentDistributionHexa.Domain.Tournament;
 
 namespace TournamentDistributionHexa.Domain.Repositories
 {
-    public interface ITournamentDomainAdapter
+    public interface ITournamentDomain
     {
         List<TournamentMatch> Create(List<Player> players, List<Game> games);
+        Task<List<TournamentMatch>> GetAll();
     }
 }
