@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentDistributionHexa.Domain", "..\TournamentDistributionHexa.Domain\TournamentDistributionHexa.Domain.csproj", "{79A25BF5-8EAD-4C63-B8EC-B0029E48801C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentDistributionHexa.Infrastructure", "..\TournamentDistributionHexa.Infrastructure\TournamentDistributionHexa.Infrastructure.csproj", "{EAF40293-F608-4C19-9EE1-EF2915ECB698}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{79A25BF5-8EAD-4C63-B8EC-B0029E48801C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79A25BF5-8EAD-4C63-B8EC-B0029E48801C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79A25BF5-8EAD-4C63-B8EC-B0029E48801C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF40293-F608-4C19-9EE1-EF2915ECB698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF40293-F608-4C19-9EE1-EF2915ECB698}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF40293-F608-4C19-9EE1-EF2915ECB698}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF40293-F608-4C19-9EE1-EF2915ECB698}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

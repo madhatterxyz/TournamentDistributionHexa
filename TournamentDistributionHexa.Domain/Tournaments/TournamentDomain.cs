@@ -1,12 +1,18 @@
 ﻿using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Tournament;
+using TournamentDistributionHexa.Domain.Tournaments;
 
 namespace TournamentDistributionHexa.Domain.Repositories
 {
-    public class TournamentDomain : ITournamentDomain
+    public class TournamentDomain : ITournamentDomainAdapter
     {
         public const int NUMBER_PLAYERS_PER_MATCH = 3;
+        private readonly ITournamentRepositoryAdapter _repositoryAdapter;
+        public TournamentDomain(ITournamentRepositoryAdapter tournamentRepositoryAdapter)
+        {
+            _repositoryAdapter = tournamentRepositoryAdapter;
+        }
         public List<TournamentMatch> Create(List<Player> players, List<Game> games)
         {
             var list = new List<TournamentMatch>();
@@ -26,6 +32,7 @@ namespace TournamentDistributionHexa.Domain.Repositories
                     numberOfMatchesCounter++;
                 }
             }
+            _repositoryAdapter.Create(list);
             return list;
         }
     }

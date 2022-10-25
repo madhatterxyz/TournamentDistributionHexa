@@ -1,18 +1,23 @@
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Moq;
 using TournamentDistributionHexa.Domain;
 using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Repositories;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Tournament;
+using TournamentDistributionHexa.Domain.Tournaments;
 
-namespace TournamentDistributionHexa.Tests
+namespace TournamentDistributionHexa.Tests.UnitTests
 {
-    public class TournamentTests
+    public class TournamentUnitTests
     {
         [Fact]
         public void CreateTournoi_Should_Return_10Matchs()
         {
             //Arrange
-            ITournamentDomain domain = new TournamentDomain();
+            var adapter = new Mock<ITournamentRepositoryAdapter>();
+            ITournamentDomainAdapter domain = new TournamentDomain(adapter.Object);
             List<Player> players = new List<Player>() {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
                 new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
@@ -33,7 +38,7 @@ namespace TournamentDistributionHexa.Tests
             };
 
             //Act
-            List<TournamentMatch> matchs = domain.Create(players,games);
+            List<TournamentMatch> matchs = domain.Create(players, games);
 
             //Assert
             Assert.True(matchs.Select(x => x.Game).Distinct().Count() == 10);
@@ -42,7 +47,8 @@ namespace TournamentDistributionHexa.Tests
         public void CreateTournoi_Should_Return_1Matchs_Per_Game()
         {
             //Arrange
-            ITournamentDomain domain = new TournamentDomain();
+            var adapter = new Mock<ITournamentRepositoryAdapter>();
+            ITournamentDomainAdapter domain = new TournamentDomain(adapter.Object);
             List<Player> players = new List<Player>() {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
                 new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
@@ -75,7 +81,7 @@ namespace TournamentDistributionHexa.Tests
                 new TournamentMatch(){ Game = games[9] },
             };
             //Act
-            List<TournamentMatch> matchs = domain.Create(players,games);
+            List<TournamentMatch> matchs = domain.Create(players, games);
             //Assert
             Assert.True(expectedMatchs.Select(x => x.Game).Distinct().SequenceEqual(matchs.Select(x => x.Game).Distinct()));
         }
@@ -83,7 +89,8 @@ namespace TournamentDistributionHexa.Tests
         public void CreateTournoi_With1Game_Should_Return_3DifferentPlayers_Per_Match()
         {
             //Arrange
-            ITournamentDomain domain = new TournamentDomain();
+            var adapter = new Mock<ITournamentRepositoryAdapter>();
+            ITournamentDomainAdapter domain = new TournamentDomain(adapter.Object);
             List<Player> players = new List<Player>()
             {
                 new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
@@ -132,6 +139,7 @@ namespace TournamentDistributionHexa.Tests
             //Assert
             Assert.True(expectedMatchs.SequenceEqual(matchs));
         }
+
     }
 
 }
