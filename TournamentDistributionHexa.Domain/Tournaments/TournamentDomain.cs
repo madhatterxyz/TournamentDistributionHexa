@@ -40,5 +40,18 @@ namespace TournamentDistributionHexa.Domain.Repositories
         {
             return _repositoryAdapter.GetAll();
         }
+        public int GetNumberOfOccurence(Player player, List<TournamentMatch> tournamentMatchs)
+        {
+            return tournamentMatchs.Count(x=>x.Scores.Any(y=>y.Player.Equals(player)));
+        }
+        public Dictionary<Player, int> GetNumberOfOccurenceOfPlayers(List<Player> players, List<TournamentMatch> tournamentMatchs)
+        {
+            Dictionary<Player, int> result = new Dictionary<Player, int>();
+            foreach (Player player in players)
+            {
+                result.Add(player,GetNumberOfOccurence(player, tournamentMatchs));
+            }
+            return result;
+        }
     }
 }
