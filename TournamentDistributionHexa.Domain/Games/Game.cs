@@ -1,4 +1,6 @@
-﻿namespace TournamentDistributionHexa.Domain
+﻿using TournamentDistributionHexa.Domain.Teams;
+
+namespace TournamentDistributionHexa.Domain
 {
     public class Game
     {
@@ -12,5 +14,6 @@
 
             return other.ID.Equals(this.ID) && other.Name.Equals(this.Name);
         }
+        public List<Team> Teams { get; set; }
     }
 }

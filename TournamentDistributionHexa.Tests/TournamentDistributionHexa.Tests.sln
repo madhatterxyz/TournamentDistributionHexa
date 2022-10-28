@@ -5,11 +5,11 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.Tests", "TournamentDistributionHexa.Tests.csproj", "{59C3ACCD-89D3-48F3-A2CF-258F43F11E84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentDistributionHexa.Domain", "..\TournamentDistributionHexa.Domain\TournamentDistributionHexa.Domain.csproj", "{79A25BF5-8EAD-4C63-B8EC-B0029E48801C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.Domain", "..\TournamentDistributionHexa.Domain\TournamentDistributionHexa.Domain.csproj", "{79A25BF5-8EAD-4C63-B8EC-B0029E48801C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentDistributionHexa.Infrastructure", "..\TournamentDistributionHexa.Infrastructure\TournamentDistributionHexa.Infrastructure.csproj", "{EAF40293-F608-4C19-9EE1-EF2915ECB698}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.Infrastructure", "..\TournamentDistributionHexa.Infrastructure\TournamentDistributionHexa.Infrastructure.csproj", "{EAF40293-F608-4C19-9EE1-EF2915ECB698}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentDistributionHexa.Application", "..\TournamentDistributionHexa.Application\TournamentDistributionHexa.Application.csproj", "{B1A7D0E3-F687-44EF-B3F2-1EC5823895AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.Application", "..\TournamentDistributionHexa.Application\TournamentDistributionHexa.Application.csproj", "{B1A7D0E3-F687-44EF-B3F2-1EC5823895AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,12 @@ namespace TournamentDistributionHexa.Domain.Score
 {
     public class MatchScore
     {
-        public Player Player { get; set; }
+        public MatchScore(Player player)
+        {
+            Player = player;
+        }
+        public int Score { get; set; }
+        public Player Player { get; }
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
