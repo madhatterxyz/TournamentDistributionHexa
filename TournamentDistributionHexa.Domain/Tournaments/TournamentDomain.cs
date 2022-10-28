@@ -17,54 +17,35 @@ namespace TournamentDistributionHexa.Domain.Repositories
             _repositoryAdapter = tournamentRepositoryAdapter;
             _configuration = configuration;
         }
-        public List<TournamentMatch> Create(List<Player> players, List<Game> games)
+        public List<TournamentMatch> Create(string nom, List<Player> players, List<Game> games)
         {
-            var list = new List<TournamentMatch>();
-            foreach (var game in games)
+            var tournamentMatches = new List<TournamentMatch>();
+            foreach (var game in GetEvenlyDistributedGames(games, players.Count))
             {
-                int numberOfPlayersCounter = 0;
-                int numberOfMatchesCounter = 1;
-                while (numberOfPlayersCounter < players.Count)
+                foreach (var team in game.Teams)
                 {
-                    List<MatchScore> scoreList = new List<MatchScore>();
-                    while (numberOfPlayersCounter < NUMBER_PLAYERS_PER_MATCH * numberOfMatchesCounter)
+                    TournamentMatch tournamentMatch = new TournamentMatch(game);
+                    foreach (var player in team.Players)
                     {
-                        scoreList.Add(new MatchScore() { Player = players[numberOfPlayersCounter] });
-                        numberOfPlayersCounter++;
+                        MatchScore matchScore = new MatchScore(players[player]);
+                        tournamentMatch.Scores.Add(matchScore);
                     }
-                    list.Add(new TournamentMatch() { Game = game, Scores = scoreList });
-                    numberOfMatchesCounter++;
+                    tournamentMatches.Add(tournamentMatch);
                 }
             }
-            _repositoryAdapter.Create(list);
-            return list;
+            _repositoryAdapter.Create(nom, tournamentMatches);
+            return tournamentMatches;
         }
 
         public async Task<List<TournamentMatch>> GetAll()
         {
             return _repositoryAdapter.GetAll();
         }
-        public int GetNumberOfOccurence(Player player, List<TournamentMatch> tournamentMatchs)
-        {
-            return tournamentMatchs.Count(x => x.Scores.Any(y => y.Player.Equals(player)));
-        }
-        public Dictionary<Player, int> GetNumberOfOccurenceOfPlayers(List<Player> players, List<TournamentMatch> tournamentMatchs)
-        {
-            Dictionary<Player, int> result = new Dictionary<Player, int>();
-            foreach (Player player in players)
-            {
-                result.Add(player, GetNumberOfOccurence(player, tournamentMatchs));
-            }
-            return result;
-        }
-        public List<Game> GetEvenlyDistributedGames(int gameCount, int playerCount)
+        public List<Game> GetEvenlyDistributedGames(List<Game> games, int playerCount)
         {
             List<int> players = new List<int>();
             for (int i = 0; i < playerCount; i++)
                 players.Add(i);
-            List<Game> games = new List<Game>();
-            for (int i = 0; i < gameCount; i++)
-                games.Add(new Game());
 
             int[] counter = new int[players.Count];
             PlayerMeeting playerMeetings = new PlayerMeeting(playerCount);

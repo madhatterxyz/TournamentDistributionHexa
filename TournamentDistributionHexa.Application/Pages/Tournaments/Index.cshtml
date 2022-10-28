@@ -22,15 +22,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Tournois)
+        @foreach (var tournoi in Model.Tournois)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Game.Name)
+                    @Html.DisplayFor(modelItem => tournoi.Game.Name)
                 </td>
                 <td>
                     <ul>
-                    @foreach(var score in item.Scores)
+                    @foreach(var score in tournoi.Scores)
                     {
                         <li>@score.Player.Lastname @score.Player.Firstname @score.Player.Telephone</li>
                         }

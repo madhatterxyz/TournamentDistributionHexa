@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Tournament;
 using TournamentDistributionHexa.Domain.Tournaments;
+using TournamentDistributionHexa.Infrastructure.Mappers;
 using TournamentDistributionHexa.Infrastructure.Models;
 
 namespace TournamentDistributionHexa.Infrastructure.Repositories
@@ -14,54 +14,66 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
         {
             _context = context;
         }
-        public void Create(List<TournamentMatch> tournamentMatchs)
+        public List<TournamentMatch> Create(string nom, List<TournamentMatch> tournamentMatches)
         {
             Tournoi tournoi = new Tournoi()
             {
-                Nom = "2022-2023"
+                Nom = nom
             };
             _context.Tournois.Add(tournoi);
-            for(int i =0; i< tournamentMatchs.Count;i++)
+            SaveMatchs(tournamentMatches, tournoi);
+            _context.SaveChanges();
+            return GetAll();
+        }
+
+        private void SaveMatchs(List<TournamentMatch> tournamentMatchs, Tournoi tournoi)
+        {
+            for (int i = 0; i < tournamentMatchs.Count; i++)
             {
                 Match match = new Match() { Nom = $"Match {i}" };
-                _context.Matches.Add(match);
-                foreach (var score in tournamentMatchs[i].Scores)
+                match.Scores = new List<Score>();
+                List<int> joueurIds = GetJoueurIds(tournamentMatchs, i);
+                foreach (int joueurId in joueurIds)
                 {
-                    Joueur joueur = _context.Joueurs.FirstOrDefault(x=>x.Id.Equals(score.Player.ID));
-                    _context.Scores.Add(new Score() {JoueurId = joueur.Id, MatchId = match.Id  });
+                    match.Scores.Add(new Score() { JoueurId = joueurId });
                 }
-                Composition composition = new Composition() { JeuId = tournamentMatchs[i].Game.ID, MatchId = match.Id, TournoiId = tournoi.Id };
-                _context.Compositions.Add(composition);
+                _context.Matches.Add(match);
+                SaveComposition(tournamentMatchs, tournoi, i, match);
             }
-            _context.SaveChanges();
         }
+
+        private List<int> GetJoueurIds(List<TournamentMatch> tournamentMatchs, int i)
+        {
+            return _context.Joueurs.Where(x => tournamentMatchs[i].Scores.Select(y => y.Player.ID).Contains((int)x.Id)).Select(x => (int)x.Id).ToList();
+        }
+
+        private void SaveComposition(List<TournamentMatch> tournamentMatchs, Tournoi tournoi, int i, Match match)
+        {
+            Composition composition = new Composition() { JeuId = tournamentMatchs[i].Game.ID, MatchId = match.Id, TournoiId = tournoi.Id };
+            _context.Compositions.Add(composition);
+        }
+
         public List<TournamentMatch> GetAll()
         {
             List<TournamentMatch> result = new List<TournamentMatch>();
             var tournois = _context.Tournois.SelectMany(x => x.Compositions).Include(x=>x.Jeu).Include(x=>x.Match).ThenInclude(x=>x.Scores).ThenInclude(x=>x.Joueur);
-            foreach(var item in tournois)
+            foreach(var tournoi in tournois)
             {
-                TournamentMatch tournamentMatch = new TournamentMatch() { 
-                    Game = new Domain.Game() { ID = (int)item.JeuId, Name = item.Jeu.Nom}};
-                List<MatchScore> matchScores = new List<MatchScore>();
-                foreach(var score in item.Match.Scores)
-                {
-                    MatchScore matchScore = new MatchScore()
-                    {
-                        Player = new Player()
-                        {
-                            ID = (int)score.JoueurId,
-                            Firstname = score.Joueur.Prénom,
-                            Lastname = score.Joueur.Nom,
-                            Telephone = score.Joueur.Telephone
-                        }
-                    };
-                    matchScores.Add(matchScore);
-                }
-                tournamentMatch.Scores = matchScores;
-                result.Add(tournamentMatch);
+                result.Add(GetTournamentMatch(tournoi));
             }
             return result;
+        }
+
+        private TournamentMatch GetTournamentMatch(Composition composition)
+        {
+            TournamentMatch tournamentMatch = new TournamentMatch(new Domain.Game() { ID = (int)composition.JeuId, Name = composition.Jeu.Nom });
+            List<MatchScore> matchScores = new List<MatchScore>();
+            foreach (var score in composition.Match.Scores)
+            {
+                matchScores.Add(MatchScoreMapper.GetMatchScore(score));
+            }
+            tournamentMatch.Scores = matchScores;
+            return tournamentMatch;
         }
     }
 }

@@ -6,6 +6,7 @@ using TournamentDistributionHexa.Domain.Repositories;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Tournament;
 using TournamentDistributionHexa.Domain.Tournaments;
+using TournamentDistributionHexa.Tests.Datasets;
 
 namespace TournamentDistributionHexa.Tests.UnitTests
 {
@@ -16,11 +17,11 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         {
             //Arrange
             ITournamentDomain domain = GetDomain();
-            List<Player> players = new List<Player>() { GetPlayers()[0], GetPlayers()[1], GetPlayers()[2] };
-            List<Game> games = GetGames();
+            List<Player> players = PlayerHelper.Get3Players();
+            List<Game> games = GameHelper.GetGames();
 
             //Act
-            List<TournamentMatch> matchs = domain.Create(players, games);
+            List<TournamentMatch> matchs = domain.Create("2022-2023", players, games);
 
             //Assert
             Assert.True(matchs.Select(x => x.Game).Distinct().Count() == 10);
@@ -30,23 +31,23 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         {
             //Arrange
             ITournamentDomain domain = GetDomain();
-            List<Player> players = new List<Player>() { GetPlayers()[0], GetPlayers()[1], GetPlayers()[2] };
-            List<Game> games = GetGames();
+            List<Player> players = PlayerHelper.Get3Players();
+            List<Game> games = GameHelper.GetGames();
             List<TournamentMatch> expectedMatchs = new List<TournamentMatch>()
             {
-                new TournamentMatch(){ Game = games[0] },
-                new TournamentMatch(){ Game = games[1] },
-                new TournamentMatch(){ Game = games[2] },
-                new TournamentMatch(){ Game = games[3] },
-                new TournamentMatch(){ Game = games[4] },
-                new TournamentMatch(){ Game = games[5] },
-                new TournamentMatch(){ Game = games[6] },
-                new TournamentMatch(){ Game = games[7] },
-                new TournamentMatch(){ Game = games[8] },
-                new TournamentMatch(){ Game = games[9] },
+                new TournamentMatch(games[0]),
+                new TournamentMatch(games[1]),
+                new TournamentMatch(games[2]),
+                new TournamentMatch(games[3]),
+                new TournamentMatch(games[4]),
+                new TournamentMatch(games[5]),
+                new TournamentMatch(games[6]),
+                new TournamentMatch(games[7]),
+                new TournamentMatch(games[8]),
+                new TournamentMatch(games[9]),
             };
             //Act
-            List<TournamentMatch> matchs = domain.Create(players, games);
+            List<TournamentMatch> matchs = domain.Create("2022-2023", players, games);
             //Assert
             Assert.True(expectedMatchs.Select(x => x.Game).Distinct().SequenceEqual(matchs.Select(x => x.Game).Distinct()));
         }
@@ -55,37 +56,34 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         {
             //Arrange
             ITournamentDomain domain = GetDomain();
-            List<Player> players = GetPlayers();
-            List<Game> games = new List<Game>()
-            {
-                new Game(){ ID = 1, Name = "Ark Nova"}
-            };
+            List<Player> players = PlayerHelper.GetPlayers();
+            List<Game> games = new List<Game>() { GameHelper.Get1Game() };
             List<TournamentMatch> expectedMatchs = new List<TournamentMatch>()
             {
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[0] },
-                    new MatchScore() { Player = players[1] },
-                    new MatchScore() { Player = players[2] },
+                new TournamentMatch(games[0]){ Scores = new List<MatchScore>(){
+                    new MatchScore(players[0]),
+                    new MatchScore(players[1]),
+                    new MatchScore(players[2])
                 } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[3] },
-                    new MatchScore() { Player = players[4] },
-                    new MatchScore() { Player = players[5] },
+                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                    new MatchScore(players[3]),
+                    new MatchScore(players[4]),
+                    new MatchScore(players[5])
                 } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[6] },
-                    new MatchScore() { Player = players[7] },
-                    new MatchScore() { Player = players[8] },
+                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                    new MatchScore(players[6]),
+                    new MatchScore(players[7]),
+                    new MatchScore(players[8])
                 } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[9] },
-                    new MatchScore() { Player = players[10] },
-                    new MatchScore() { Player = players[11] },
+                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                    new MatchScore(players[9]),
+                    new MatchScore(players[10]),
+                    new MatchScore(players[11])
                 } }
 
             };
             //Act
-            List<TournamentMatch> matchs = domain.Create(players, games);
+            List<TournamentMatch> matchs = domain.Create("2022-2023", players, games);
             //Assert
             Assert.True(expectedMatchs.SequenceEqual(matchs));
         }
@@ -96,13 +94,9 @@ namespace TournamentDistributionHexa.Tests.UnitTests
             //Arrange
             var adapter = new Mock<ITournamentRepository>();
             adapter.Setup(x => x.GetAll()).Returns(new List<TournamentMatch>() {
-                new TournamentMatch() {
-                    Game = GetGames()[0],
+                new TournamentMatch(GameHelper.Get1Game()) {
                     Scores = new List<MatchScore>(){
-                        new MatchScore()
-                        {
-                            Player = GetPlayers()[0]
-                        }
+                        new MatchScore(PlayerHelper.Get1Player())
                     }
                 }
             });
@@ -112,186 +106,21 @@ namespace TournamentDistributionHexa.Tests.UnitTests
             //Assert
             Assert.True(matchs.Count() == 1);
         }
+
         [Fact]
-        public void GetNumberOfOccurence_Should_Return_1_for_Player1()
+        public void CreateTournoi_With_10_Games_And_12_Players_Should_Have_1_Meeting_At_Least_Per_Player_Pairing()
         {
             //Arrange
             ITournamentDomain domain = GetDomain();
-            List<Player> players = GetPlayers();
-            Game game = GetGames()[0];
-            List<TournamentMatch> tournamentMatchs = new List<TournamentMatch>()
-            {
-                new TournamentMatch(){ Game = game, Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[0] },
-                    new MatchScore() { Player = players[1] },
-                    new MatchScore() { Player = players[2] },
-                } },
-                new TournamentMatch(){ Game = game, Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[3] },
-                    new MatchScore() { Player = players[4] },
-                    new MatchScore() { Player = players[5] },
-                } },
-                new TournamentMatch(){ Game = game, Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[6] },
-                    new MatchScore() { Player = players[7] },
-                    new MatchScore() { Player = players[8] },
-                } },
-                new TournamentMatch(){ Game = game, Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[9] },
-                    new MatchScore() { Player = players[10] },
-                    new MatchScore() { Player = players[11] },
-                } }
-
-            };
-
-            //Act
-            int numberOfOccurence = domain.GetNumberOfOccurence(players[0], tournamentMatchs);
-
-            //Assert
-            Assert.True(numberOfOccurence == 1);
-        }
-        [Fact]
-        public void GetNumberOfOccurencesOfPlayers_Should_Return_1_for_each_Player()
-        {
-            //Arrange
-            ITournamentDomain domain = GetDomain();
-            List<Player> players = GetPlayers();
-            Game game = GetGames()[0];
-            List<TournamentMatch> tournamentMatchs = new List<TournamentMatch>()
-            {
-                new TournamentMatch(){ Game = game, Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[0] },
-                    new MatchScore() { Player = players[1] },
-                    new MatchScore() { Player = players[2] },
-                } },
-                new TournamentMatch(){ Game = game, Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[3] },
-                    new MatchScore() { Player = players[4] },
-                    new MatchScore() { Player = players[5] },
-                } },
-                new TournamentMatch(){ Game = game, Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[6] },
-                    new MatchScore() { Player = players[7] },
-                    new MatchScore() { Player = players[8] },
-                } },
-                new TournamentMatch(){ Game = game, Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[9] },
-                    new MatchScore() { Player = players[10] },
-                    new MatchScore() { Player = players[11] },
-                } }
-
-            };
-            Dictionary<Player, int> expectedResult = new Dictionary<Player, int>()
-            {
-                {players[0],1 },
-                {players[1],1 },
-                {players[2],1 },
-                {players[3],1 },
-                {players[4],1 },
-                {players[5],1 },
-                {players[6],1 },
-                {players[7],1 },
-                {players[8],1 },
-                {players[9],1 },
-                {players[10],1 },
-                {players[11],1 }
-            };
-
-            //Act
-            Dictionary<Player, int> numberOfOccurences = domain.GetNumberOfOccurenceOfPlayers(players, tournamentMatchs);
-
-            //Assert
-            Assert.True(numberOfOccurences.SequenceEqual(expectedResult));
-        }
-
-        [Fact]
-        public void GetNumberOfOccurencesOfPlayers_Should_Return_2_for_each_Player()
-        {
-            //Arrange
-            ITournamentDomain domain = GetDomain();
-            List<Player> players = GetPlayers();
-            List<Game> games = new List<Game>() { GetGames()[0], GetGames()[1] };
-            List<TournamentMatch> tournamentMatchs = new List<TournamentMatch>()
-            {
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[0] },
-                    new MatchScore() { Player = players[1] },
-                    new MatchScore() { Player = players[2] },
-                } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[3] },
-                    new MatchScore() { Player = players[4] },
-                    new MatchScore() { Player = players[5] },
-                } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[6] },
-                    new MatchScore() { Player = players[7] },
-                    new MatchScore() { Player = players[8] },
-                } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[9] },
-                    new MatchScore() { Player = players[10] },
-                    new MatchScore() { Player = players[11] },
-                } },
-                new TournamentMatch(){ Game = games[1], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[0] },
-                    new MatchScore() { Player = players[1] },
-                    new MatchScore() { Player = players[2] },
-                } },
-                new TournamentMatch(){ Game = games[1], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[3] },
-                    new MatchScore() { Player = players[4] },
-                    new MatchScore() { Player = players[5] },
-                } },
-                new TournamentMatch(){ Game = games[1], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[6] },
-                    new MatchScore() { Player = players[7] },
-                    new MatchScore() { Player = players[8] },
-                } },
-                new TournamentMatch(){ Game = games[1], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[9] },
-                    new MatchScore() { Player = players[10] },
-                    new MatchScore() { Player = players[11] },
-                } }
-
-            };
-            Dictionary<Player, int> expectedResult = new Dictionary<Player, int>()
-            {
-                {players[0],2 },
-                {players[1],2 },
-                {players[2],2 },
-                {players[3],2 },
-                {players[4],2 },
-                {players[5],2 },
-                {players[6],2 },
-                {players[7],2 },
-                {players[8],2 },
-                {players[9],2 },
-                {players[10],2 },
-                {players[11],2 }
-            };
-
-            //Act
-            Dictionary<Player, int> numberOfOccurences = domain.GetNumberOfOccurenceOfPlayers(players, tournamentMatchs);
-
-            //Assert
-            Assert.True(numberOfOccurences.SequenceEqual(expectedResult));
-        }
-
-        [Fact]
-        public void CreateTournoi_With_10_Games_And_12_Players_Should_Have_1_Meeting_Per_Player_Pairing()
-        {
-            //Arrange
-            ITournamentDomain domain = GetDomain();
-            List<Player> players = GetPlayers();
-            List<Game> games = GetGames();
+            List<Player> players = PlayerHelper.GetPlayers();
+            List<Game> games = GameHelper.GetGames();
 
             int[][] MemberPairing = new int[players.Count][];
             for (int i = 0; i < players.Count; i++)
                 MemberPairing[i] = new int[players.Count];
 
             //Act
-            List<Game> Games = domain.GetEvenlyDistributedGames(games.Count, players.Count);
+            List<Game> Games = domain.GetEvenlyDistributedGames(games, players.Count);
 
             foreach (Game Game in Games)
                 foreach (var Team in Game.Teams)
@@ -323,40 +152,6 @@ namespace TournamentDistributionHexa.Tests.UnitTests
             var configuration = new Mock<IConfiguration>();
             configuration.Setup(x => x["AppSettings:NumberOfPlayersByTeam"]).Returns("3");
             return configuration.Object;
-        }
-        private List<Player> GetPlayers()
-        {
-            return new List<Player>()
-            {
-                new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
-                new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
-                new Player(){ID=3, Firstname = "Jeremy",Lastname="F",Telephone=""},
-                new Player(){ID=4, Firstname = "Ludovic",Lastname="R",Telephone=""},
-                new Player(){ID=5, Firstname = "Julien",Lastname="P",Telephone=""},
-                new Player(){ID=6, Firstname = "Nicolas",Lastname="F",Telephone=""},
-                new Player(){ID=7, Firstname = "Corentin",Lastname="C",Telephone=""},
-                new Player(){ID=8, Firstname = "Corinne",Lastname="O",Telephone=""},
-                new Player(){ID=9, Firstname = "Laura",Lastname="X",Telephone=""},
-                new Player(){ID=10, Firstname = "Noémie",Lastname="R",Telephone=""},
-                new Player(){ID=11, Firstname = "Denis",Lastname="R",Telephone=""},
-                new Player(){ID=12, Firstname = "Gabriel",Lastname="Y",Telephone=""}
-            };
-        }
-        private List<Game> GetGames()
-        {
-            return new List<Game>()
-            {
-                new Game(){ ID = 1, Name = "Ark Nova"},
-                new Game(){ ID = 2, Name = "Zombidice"},
-                new Game(){ ID = 3, Name = "Perudo"},
-                new Game(){ ID = 4, Name = "Living Forest"},
-                new Game(){ ID = 5, Name = "Mille fiori"},
-                new Game(){ ID = 6, Name = "Augustus"},
-                new Game(){ ID = 7, Name = "Dune Imperium"},
-                new Game(){ ID = 8, Name = "Cactus town"},
-                new Game(){ ID = 9, Name = "Akropolis"},
-                new Game(){ ID = 10, Name = "L'âge de pierre"}
-            };
         }
 
     }
