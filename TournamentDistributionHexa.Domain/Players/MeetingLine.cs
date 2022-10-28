@@ -1,22 +1,23 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 namespace TournamentDistributionHexa.Domain.Players
 {
     [DebuggerDisplay("{DebugText}")]
     public class MeetingLine
     {
-        private int[] _meetingsValue;
+        private readonly int[] _meetingsValue;
         public MeetingLine(int playerCount)
         {
             _meetingsValue = new int[playerCount];
         }
-        public int GetMeetingsNumber(int playerB)
+        public int GetMeetingsNumber(int player)
         {
-            return _meetingsValue[playerB];
+            return _meetingsValue[player];
         }
-        public void IncrementMeetingsNumber(int playerB)
+        public void IncrementMeetingsNumber(int player)
         {
-            _meetingsValue[playerB]++;
+            _meetingsValue[player]++;
         }
         public int GetMeetingsMaximumNumber(int currentPlayer, List<int> teamMembers)
         {
@@ -38,14 +39,21 @@ namespace TournamentDistributionHexa.Domain.Players
         {
             get
             {
-                string result = string.Empty;
-                for (int j = 0; j < _meetingsValue.Length; j++)
-                {
-                    result += $"{j}  [{_meetingsValue[j],2}]  ";
-                }
-
-                return result;
+                return MeetingLineToString();
             }
+        }
+        public override string ToString()
+        {
+            return MeetingLineToString();
+        }
+        private string MeetingLineToString()
+        {
+            StringBuilder result = new StringBuilder();
+            for (int j = 0; j < _meetingsValue.Length; j++)
+            {
+                result.Append($"{j}  [{_meetingsValue[j],2}]  ");
+            }
+            return result.ToString();
         }
     }
 }

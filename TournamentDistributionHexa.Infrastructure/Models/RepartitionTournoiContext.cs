@@ -75,7 +75,7 @@ namespace TournamentDistributionHexa.Infrastructure.Models
 
                 entity.Property(e => e.Nom).HasMaxLength(50);
 
-                entity.Property(e => e.Prénom).HasMaxLength(50);
+                entity.Property(e => e.Prenom).HasMaxLength(50);
 
                 entity.Property(e => e.Telephone).HasMaxLength(50);
             });

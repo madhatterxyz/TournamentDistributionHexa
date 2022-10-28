@@ -85,11 +85,11 @@ namespace TournamentDistributionHexa.Tests.UnitTests
             //Act
             List<TournamentMatch> matchs = domain.Create("2022-2023", players, games);
             //Assert
-            Assert.True(expectedMatchs.SequenceEqual(matchs));
+            Assert.Equivalent(expectedMatchs,matchs);
         }
 
         [Fact]
-        public async Task GetAll_Should_Return_1_TournamentMatch()
+        public void GetAll_Should_Return_1_TournamentMatch()
         {
             //Arrange
             var adapter = new Mock<ITournamentRepository>();
@@ -102,9 +102,9 @@ namespace TournamentDistributionHexa.Tests.UnitTests
             });
             ITournamentDomain domain = GetDomain(adapter.Object);
             //Act
-            List<TournamentMatch> matchs = await domain.GetAll();
+            List<TournamentMatch> matchs = domain.GetAll();
             //Assert
-            Assert.True(matchs.Count() == 1);
+            Assert.True(matchs.Count == 1);
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace TournamentDistributionHexa.Tests.UnitTests
                 MemberPairing[i] = new int[players.Count];
 
             //Act
-            List<Game> Games = domain.GetEvenlyDistributedGames(games, players.Count);
+            IList<Game> Games = domain.GetEvenlyDistributedGames(games, players.Count);
 
             foreach (Game Game in Games)
                 foreach (var Team in Game.Teams)

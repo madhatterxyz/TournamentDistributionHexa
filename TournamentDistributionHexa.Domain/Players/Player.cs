@@ -1,17 +1,16 @@
-﻿namespace TournamentDistributionHexa.Domain.Players
+﻿namespace TournamentDistributionHexa.Domain.Players;
+
+public record Player
 {
-    public class Player
+    public Player(int id, string firstname, string lastname, string telephone)
     {
-        public int ID { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string Telephone { get; set; }
-        public override bool Equals(object? obj)
-        {
-            if (obj == null) return false;
-            if (obj.GetType() != typeof(Player)) return false;
-            Player other = (Player)obj;
-            return other.ID.Equals(ID) && other.Firstname.Equals(Firstname) && other.Lastname.Equals(Lastname) && other.Telephone.Equals(Telephone);
-        }
+        ID = id;
+        Firstname = firstname;
+        Lastname = lastname;
+        Telephone = telephone;
     }
+    public int ID { get; }
+    public string Firstname { get; }
+    public string Lastname { get; }
+    public string Telephone { get; }
 }

@@ -66,7 +66,7 @@ namespace TournamentDistributionHexa.Tests.IntegrationTests
             {
                 foreach(var player in PlayerHelper.GetPlayers())
                 {
-                    context.Joueurs.Add(new Joueur() { Id = player.ID, Nom = player.Lastname, Prénom = player.Firstname, Telephone = player.Telephone });
+                    context.Joueurs.Add(new Joueur() { Id = player.ID, Nom = player.Lastname, Prenom = player.Firstname, Telephone = player.Telephone });
                 }
 
                 foreach (var game in GameHelper.GetGames())
