@@ -2,7 +2,7 @@
 {
     public class PlayerMeeting
     {
-        private MeetingLine[] _meetingLines;
+        private readonly MeetingLine[] _meetingLines;
         public PlayerMeeting(int playerCount)
         {
             _meetingLines = new MeetingLine[playerCount];

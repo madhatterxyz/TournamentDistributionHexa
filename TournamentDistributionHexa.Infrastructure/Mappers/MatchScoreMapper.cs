@@ -8,13 +8,7 @@ namespace TournamentDistributionHexa.Infrastructure.Mappers
     {
         public static MatchScore GetMatchScore(Score score)
         {
-            return new MatchScore(new Player()
-            {
-                ID = (int)score.JoueurId,
-                Firstname = score.Joueur.Prénom,
-                Lastname = score.Joueur.Nom,
-                Telephone = score.Joueur.Telephone
-            });
+            return new MatchScore(new Player((int)score.JoueurId, score.Joueur.Prenom, score.Joueur.Nom, score.Joueur.Telephone));
         }
     }
 }

@@ -8,18 +8,18 @@ namespace TournamentDistributionHexa.Tests.Datasets
         {
             return new List<Player>()
             {
-                new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
-                new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
-                new Player(){ID=3, Firstname = "Jeremy",Lastname="F",Telephone=""},
-                new Player(){ID=4, Firstname = "Ludovic",Lastname="R",Telephone=""},
-                new Player(){ID=5, Firstname = "Julien",Lastname="P",Telephone=""},
-                new Player(){ID=6, Firstname = "Nicolas",Lastname="F",Telephone=""},
-                new Player(){ID=7, Firstname = "Corentin",Lastname="C",Telephone=""},
-                new Player(){ID=8, Firstname = "Corinne",Lastname="O",Telephone=""},
-                new Player(){ID=9, Firstname = "Laura",Lastname="X",Telephone=""},
-                new Player(){ID=10, Firstname = "Noémie",Lastname="R",Telephone=""},
-                new Player(){ID=11, Firstname = "Denis",Lastname="R",Telephone=""},
-                new Player(){ID=12, Firstname = "Gabriel",Lastname="Y",Telephone=""}
+                new Player(1, "Nicolas","B",""),
+                new Player(2, "Alexandra","F",""),
+                new Player(3, "Jeremy","F",""),
+                new Player(4, "Ludovic","R",""),
+                new Player(5, "Julien","P",""),
+                new Player(6, "Nicolas","F",""),
+                new Player(7, "Corentin","C",""),
+                new Player(8, "Corinne","O",""),
+                new Player(9, "Laura","X",""),
+                new Player(10, "Noémie","R",""),
+                new Player(11, "Denis","R",""),
+                new Player(12, "Gabriel","Y","")
             };
         }
         public static Player Get1Player()

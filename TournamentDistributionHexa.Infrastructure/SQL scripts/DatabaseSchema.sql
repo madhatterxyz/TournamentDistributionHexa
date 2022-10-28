@@ -42,7 +42,7 @@ GO
 CREATE TABLE [dbo].[Joueur](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Nom] [nvarchar](50) NOT NULL,
-	[Prénom] [nvarchar](50) NOT NULL,
+	[Prenom] [nvarchar](50) NOT NULL,
 	[Telephone] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Joueur] PRIMARY KEY CLUSTERED 
 (

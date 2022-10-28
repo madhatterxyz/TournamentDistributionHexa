@@ -17,7 +17,7 @@ namespace TournamentDistributionHexa.Domain.Repositories
             _repositoryAdapter = tournamentRepositoryAdapter;
             _configuration = configuration;
         }
-        public List<TournamentMatch> Create(string nom, List<Player> players, List<Game> games)
+        public List<TournamentMatch> Create(string nom, IList<Player> players, IList<Game> games)
         {
             var tournamentMatches = new List<TournamentMatch>();
             foreach (var game in GetEvenlyDistributedGames(games, players.Count))
@@ -37,15 +37,15 @@ namespace TournamentDistributionHexa.Domain.Repositories
             return tournamentMatches;
         }
 
-        public async Task<List<TournamentMatch>> GetAll()
+        public List<TournamentMatch> GetAll()
         {
             return _repositoryAdapter.GetAll();
         }
-        public List<Game> GetEvenlyDistributedGames(List<Game> games, int playerCount)
+        public IList<Game> GetEvenlyDistributedGames(IList<Game> games, int playerCount)
         {
             List<int> players = new List<int>();
-            for (int i = 0; i < playerCount; i++)
-                players.Add(i);
+            for (int playerIndex = 0; playerIndex < playerCount; playerIndex++)
+                players.Add(playerIndex);
 
             int[] counter = new int[players.Count];
             PlayerMeeting playerMeetings = new PlayerMeeting(playerCount);
@@ -63,7 +63,7 @@ namespace TournamentDistributionHexa.Domain.Repositories
         /// <param name="counter">Number of assignation in a team for each player</param>
         /// <param name="playersMeetings">Number of meetings between two players</param>
         /// <param name="numberOfPlayersByTeam">Number of players maximum by team</param>
-        private void BrowseGames(int playerCount, List<Game> games, int[] counter, PlayerMeeting playersMeetings, int numberOfPlayersByTeam)
+        private void BrowseGames(int playerCount, IList<Game> games, int[] counter, PlayerMeeting playersMeetings, int numberOfPlayersByTeam)
         {
             foreach (Game game in games)
             {
@@ -84,7 +84,7 @@ namespace TournamentDistributionHexa.Domain.Repositories
         {
             int attributedPlayers = 0;
             int numberOfTeams = (playerCount + numberOfPlayersByTeam - 1) / numberOfPlayersByTeam;
-            for (int i = 0; i < numberOfTeams; i++)
+            for (int teamIndex = 0; teamIndex < numberOfTeams; teamIndex++)
             {
                 Team team = new Team() { Players = new List<int>() };
                 attributedPlayers = SetPlayersInTeam(playerCount, counter, playersMeetings, numberOfPlayersByTeam, attributedPlayers, team);
@@ -104,7 +104,7 @@ namespace TournamentDistributionHexa.Domain.Repositories
         /// <returns></returns>
         private static int SetPlayersInTeam(int playerCount, int[] counter, PlayerMeeting playersMeetings, int numberOfPlayersByTeam, int attributedPlayers, Team team)
         {
-            for (int j = 0; j < numberOfPlayersByTeam; j++)
+            for (int playerIndex = 0; playerIndex < numberOfPlayersByTeam; playerIndex++)
             {
                 if (attributedPlayers < playerCount)
                 {
@@ -126,12 +126,12 @@ namespace TournamentDistributionHexa.Domain.Repositories
         /// <param name="team"></param>
         private static void FeedNumberOfMeetingsBetweenTwoPlayers(int currentMinimumIndex, PlayerMeeting playersMeetings, Team team)
         {
-            for (int l = 0; l < team.Players.Count; l++)
+            for (int playerIndex = 0; playerIndex < team.Players.Count; playerIndex++)
             {
-                if (team.Players[l] != currentMinimumIndex)
+                if (team.Players[playerIndex] != currentMinimumIndex)
                 {
-                    playersMeetings.IncrementMeetingsNumber(currentMinimumIndex, team.Players[l]);
-                    playersMeetings.IncrementMeetingsNumber(team.Players[l], currentMinimumIndex);
+                    playersMeetings.IncrementMeetingsNumber(currentMinimumIndex, team.Players[playerIndex]);
+                    playersMeetings.IncrementMeetingsNumber(team.Players[playerIndex], currentMinimumIndex);
                 }
             }
 
@@ -145,29 +145,29 @@ namespace TournamentDistributionHexa.Domain.Repositories
         private static List<int> SearchMinPlayerIndex(int[] playCount)
         {
             int currentMinimumValue = int.MaxValue;
-            for (int k = 0; k < playCount.Count(); k++)
+            for (int playerIndex = 0; playerIndex < playCount.Count(); playerIndex++)
             {
-                if (currentMinimumValue > playCount[k])
+                if (currentMinimumValue > playCount[playerIndex])
                 {
-                    currentMinimumValue = playCount[k];
+                    currentMinimumValue = playCount[playerIndex];
                 }
             }
             List<int> playerWithSameMinimumValue = new List<int>();
-            for (int l = 0; l < playCount.Count(); l++)
+            for (int playerIndex = 0; playerIndex < playCount.Count(); playerIndex++)
             {
-                if (currentMinimumValue == playCount[l])
+                if (currentMinimumValue == playCount[playerIndex])
                 {
-                    playerWithSameMinimumValue.Add(l);
+                    playerWithSameMinimumValue.Add(playerIndex);
                 }
             }
             return playerWithSameMinimumValue;
         }
-        private static int FilterPlayerMinList(List<int> playersMin, PlayerMeeting playerMeetings, Team team)
+        private static int FilterPlayerMinList(IList<int> playersMin, PlayerMeeting playerMeetings, Team team)
         {
             int currentMinimumValue = int.MaxValue;
-            for (int i = 0; i < playersMin.Count; i++)
+            for (int playerIndex = 0; playerIndex < playersMin.Count; playerIndex++)
             {
-                int player = playersMin[i];
+                int player = playersMin[playerIndex];
                 int maximum = playerMeetings.GetMeetingsMaximumNumber(player, team.Players);
                 if (maximum != int.MinValue && currentMinimumValue > maximum)
                 {
@@ -180,9 +180,9 @@ namespace TournamentDistributionHexa.Domain.Repositories
             }
 
             List<int> playerWithSameMinimumValue = new List<int>();
-            for (int i = 0; i < playersMin.Count; i++)
+            for (int playerIndex = 0; playerIndex < playersMin.Count; playerIndex++)
             {
-                int player = playersMin[i];
+                int player = playersMin[playerIndex];
                 int maximum = playerMeetings.GetMeetingsMaximumNumber(player, team.Players);
                 if (currentMinimumValue == maximum)
                 {

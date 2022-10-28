@@ -9,12 +9,12 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
 {
     public class TournamentRepositoryAdapter : ITournamentRepository
     {
-        private RepartitionTournoiContext _context;
+        private readonly RepartitionTournoiContext _context;
         public TournamentRepositoryAdapter(RepartitionTournoiContext context)
         {
             _context = context;
         }
-        public List<TournamentMatch> Create(string nom, List<TournamentMatch> tournamentMatches)
+        public List<TournamentMatch> Create(string nom, IList<TournamentMatch> tournamentMatches)
         {
             Tournoi tournoi = new Tournoi()
             {
@@ -26,28 +26,28 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
             return GetAll();
         }
 
-        private void SaveMatchs(List<TournamentMatch> tournamentMatchs, Tournoi tournoi)
+        private void SaveMatchs(IList<TournamentMatch> tournamentMatchs, Tournoi tournoi)
         {
-            for (int i = 0; i < tournamentMatchs.Count; i++)
+            for (int matchIndex = 0; matchIndex < tournamentMatchs.Count; matchIndex++)
             {
-                Match match = new Match() { Nom = $"Match {i}" };
+                Match match = new Match() { Nom = $"Match {matchIndex}" };
                 match.Scores = new List<Score>();
-                List<int> joueurIds = GetJoueurIds(tournamentMatchs, i);
+                List<int> joueurIds = GetJoueurIds(tournamentMatchs, matchIndex);
                 foreach (int joueurId in joueurIds)
                 {
                     match.Scores.Add(new Score() { JoueurId = joueurId });
                 }
                 _context.Matches.Add(match);
-                SaveComposition(tournamentMatchs, tournoi, i, match);
+                SaveComposition(tournamentMatchs, tournoi, matchIndex, match);
             }
         }
 
-        private List<int> GetJoueurIds(List<TournamentMatch> tournamentMatchs, int i)
+        private List<int> GetJoueurIds(IList<TournamentMatch> tournamentMatchs, int i)
         {
             return _context.Joueurs.Where(x => tournamentMatchs[i].Scores.Select(y => y.Player.ID).Contains((int)x.Id)).Select(x => (int)x.Id).ToList();
         }
 
-        private void SaveComposition(List<TournamentMatch> tournamentMatchs, Tournoi tournoi, int i, Match match)
+        private void SaveComposition(IList<TournamentMatch> tournamentMatchs, Tournoi tournoi, int i, Match match)
         {
             Composition composition = new Composition() { JeuId = tournamentMatchs[i].Game.ID, MatchId = match.Id, TournoiId = tournoi.Id };
             _context.Compositions.Add(composition);
@@ -66,7 +66,7 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
 
         private TournamentMatch GetTournamentMatch(Composition composition)
         {
-            TournamentMatch tournamentMatch = new TournamentMatch(new Domain.Game() { ID = (int)composition.JeuId, Name = composition.Jeu.Nom });
+            TournamentMatch tournamentMatch = new TournamentMatch(new Domain.Game( (int)composition.JeuId, composition.Jeu.Nom ));
             List<MatchScore> matchScores = new List<MatchScore>();
             foreach (var score in composition.Match.Scores)
             {
