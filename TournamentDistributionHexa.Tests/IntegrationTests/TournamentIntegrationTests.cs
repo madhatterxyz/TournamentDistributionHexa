@@ -22,26 +22,9 @@ namespace TournamentDistributionHexa.Tests.IntegrationTests
             InitializeInMemoryDatabaseData(options);
             using (var _context = new RepartitionTournoiContext(options))
             {
-                ITournamentRepository domain = new TournamentRepositoryAdapter(_context);
-                List<Player> players = new List<Player>()
-            {
-                new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
-                new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
-                new Player(){ID=3, Firstname = "Jeremy",Lastname="F",Telephone=""},
-                new Player(){ID=4, Firstname = "Ludovic",Lastname="R",Telephone=""},
-                new Player(){ID=5, Firstname = "Julien",Lastname="P",Telephone=""},
-                new Player(){ID=6, Firstname = "Nicolas",Lastname="F",Telephone=""},
-                new Player(){ID=7, Firstname = "Corentin",Lastname="C",Telephone=""},
-                new Player(){ID=8, Firstname = "Corinne",Lastname="O",Telephone=""},
-                new Player(){ID=9, Firstname = "Laura",Lastname="X",Telephone=""},
-                new Player(){ID=10, Firstname = "Noémie",Lastname="R",Telephone=""},
-                new Player(){ID=11, Firstname = "Denis",Lastname="R",Telephone=""},
-                new Player(){ID=12, Firstname = "Gabriel",Lastname="Y",Telephone=""}
-            };
-                List<Game> games = new List<Game>()
-            {
-                new Game(){ ID = 1, Name = "Ark Nova"}
-            };
+                ITournamentMatchRepository domain = new TournamentMatchRepositoryAdapter(_context);
+                List<Player> players = PlayerHelper.GetPlayers();
+                List<Game> games = new List<Game>() { GameHelper.Get1Game() };
                 List<TournamentMatch> matchs = new List<TournamentMatch>()
             {
                 new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){

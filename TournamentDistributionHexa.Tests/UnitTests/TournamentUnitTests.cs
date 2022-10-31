@@ -144,7 +144,7 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         public async Task GetAll_Should_Return_1_TournamentMatch()
         {
             //Arrange
-            var adapter = new Mock<ITournamentRepository>();
+            var adapter = new Mock<ITournamentMatchRepository>();
             adapter.Setup(x => x.GetAll()).Returns(new List<TournamentMatch>() {
                 new TournamentMatch() {
                     Game = new Game()
@@ -230,73 +230,18 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         [Fact]
         public void GetNumberOfOccurencesOfPlayers_Should_Return_1_for_each_Player()
         {
-            //Arrange
-            var adapter = new Mock<ITournamentRepository>();
-            ITournamentDomain domain = new TournamentDomain(adapter.Object);
-            List<Player> players = new List<Player>()
-            {
-                new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
-                new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
-                new Player(){ID=3, Firstname = "Jeremy",Lastname="F",Telephone=""},
-                new Player(){ID=4, Firstname = "Ludovic",Lastname="R",Telephone=""},
-                new Player(){ID=5, Firstname = "Julien",Lastname="P",Telephone=""},
-                new Player(){ID=6, Firstname = "Nicolas",Lastname="F",Telephone=""},
-                new Player(){ID=7, Firstname = "Corentin",Lastname="C",Telephone=""},
-                new Player(){ID=8, Firstname = "Corinne",Lastname="O",Telephone=""},
-                new Player(){ID=9, Firstname = "Laura",Lastname="X",Telephone=""},
-                new Player(){ID=10, Firstname = "Noémie",Lastname="R",Telephone=""},
-                new Player(){ID=11, Firstname = "Denis",Lastname="R",Telephone=""},
-                new Player(){ID=12, Firstname = "Gabriel",Lastname="Y",Telephone=""}
-            };
-            List<Game> games = new List<Game>()
-            {
-                new Game(){ ID = 1, Name = "Ark Nova"}
-            };
-            List<TournamentMatch> tournamentMatchs = new List<TournamentMatch>()
-            {
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[0] },
-                    new MatchScore() { Player = players[1] },
-                    new MatchScore() { Player = players[2] },
-                } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[3] },
-                    new MatchScore() { Player = players[4] },
-                    new MatchScore() { Player = players[5] },
-                } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[6] },
-                    new MatchScore() { Player = players[7] },
-                    new MatchScore() { Player = players[8] },
-                } },
-                new TournamentMatch(){ Game = games[0], Scores = new List<MatchScore>(){
-                    new MatchScore() { Player = players[9] },
-                    new MatchScore() { Player = players[10] },
-                    new MatchScore() { Player = players[11] },
-                } }
-
-            };
-            Dictionary<Player, int> expectedResult = new Dictionary<Player, int>()
-            {
-                {players[0],1 },
-                {players[1],1 },
-                {players[2],1 },
-                {players[3],1 },
-                {players[4],1 },
-                {players[5],1 },
-                {players[6],1 },
-                {players[7],1 },
-                {players[8],1 },
-                {players[9],1 },
-                {players[10],1 },
-                {players[11],1 }
-            };
-
-            //Act
-            Dictionary<Player,int> numberOfOccurences = domain.GetNumberOfOccurenceOfPlayers(players, tournamentMatchs);
-
-            //Assert
-            Assert.True(numberOfOccurences.SequenceEqual(expectedResult));
+            var adapter = new Mock<ITournamentMatchRepository>();
+            return new TournamentDomain(adapter.Object, GetConfiguration());
+        }
+        private ITournamentDomain GetDomain(ITournamentMatchRepository adapter)
+        {
+            return new TournamentDomain(adapter, GetConfiguration());
+        }
+        private IConfiguration GetConfiguration()
+        {
+            var configuration = new Mock<IConfiguration>();
+            configuration.Setup(x => x["AppSettings:NumberOfPlayersByTeam"]).Returns("3");
+            return configuration.Object;
         }
 
     }

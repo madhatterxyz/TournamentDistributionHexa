@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ITournamentDomain, TournamentDomain>();
-builder.Services.AddScoped<ITournamentRepository, TournamentRepositoryAdapter>();
+builder.Services.AddScoped<ITournamentMatchRepository, TournamentMatchRepositoryAdapter>();
 builder.Services.AddDbContext<RepartitionTournoiContext>(
     options => options.UseSqlServer("name=ConnectionStrings:RepartitionTournoiContext"));
 
