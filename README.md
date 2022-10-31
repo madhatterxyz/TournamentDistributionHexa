@@ -1,6 +1,6 @@
 # TournamentDistributionHexa
 ## The need
-As the vice-president of a board game club, I need to organize a tournament for my fellow comrades and I. We have voted for the most wanted games we wanted to challenge ourselves with and 10 of them have been elected. So, the 12 players must play these 10 games for 3 months. I need a program to distribute the players in pools where the pools are not always the same for each game.
+As the vice-president of a board game club, I need to organize a tournament for my fellow comrades and I. We have voted for the most wanted games we wanted to challenge ourselves with and 10 of them have been elected. So, the 12 players must play these 10 games for 3 months. I need a program to distribute the players in pools where the pools are not always the same for each game. Each game cannot have more than 4 players.
 
 For example :
 

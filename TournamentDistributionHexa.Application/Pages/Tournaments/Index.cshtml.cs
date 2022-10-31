@@ -16,9 +16,9 @@ namespace TournamentDistributionHexa.Application.Pages.Tournaments
 
         public IList<TournamentMatch> Tournois { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            Tournois = await _services.GetAll();
+            Tournois = _services.GetAll();
         }
     }
 }

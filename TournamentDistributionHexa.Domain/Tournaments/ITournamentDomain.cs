@@ -5,9 +5,8 @@ namespace TournamentDistributionHexa.Domain.Repositories
 {
     public interface ITournamentDomain
     {
-        List<TournamentMatch> Create(List<Player> players, List<Game> games);
-        Task<List<TournamentMatch>> GetAll();
-        int GetNumberOfOccurence(Player player, List<TournamentMatch> tournamentMatchs);
-        Dictionary<Player,int> GetNumberOfOccurenceOfPlayers(List<Player> players, List<TournamentMatch> tournamentMatchs);
+        List<TournamentMatch> Create(string nom, IList<Player> players, IList<Game> games);
+        List<TournamentMatch> GetAll();
+        IList<Game> GetEvenlyDistributedGames(IList<Game> games, int playerCount);
     }
 }

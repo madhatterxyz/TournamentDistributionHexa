@@ -1,18 +1,15 @@
 ﻿using TournamentDistributionHexa.Domain.Score;
 
-namespace TournamentDistributionHexa.Domain.Tournament
-{
-    public class TournamentMatch
-    {
-        public Game Game { get; set; }
-        public List<MatchScore> Scores { get; set; }
-        public override bool Equals(object? obj)
-        {
-            if (obj == null) return false;
-            if (obj.GetType() != typeof(TournamentMatch)) return false;
-            TournamentMatch other = (TournamentMatch)obj;
+namespace TournamentDistributionHexa.Domain.Tournament;
 
-            return other.Game.Equals(Game) && other.Scores.SequenceEqual(Scores);
-        }
+public record TournamentMatch
+{
+    public TournamentMatch(Game game)
+    {
+        Game = game;
+        Scores = new List<MatchScore>();
     }
+
+    public Game Game { get;  }
+    public List<MatchScore> Scores { get; set; }
 }
