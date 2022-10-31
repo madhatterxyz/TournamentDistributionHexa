@@ -8,91 +8,73 @@ using TournamentDistributionHexa.Infrastructure.Models;
 using TournamentDistributionHexa.Infrastructure.Repositories;
 using TournamentDistributionHexa.Tests.Datasets;
 
-namespace TournamentDistributionHexa.Tests.IntegrationTests
+namespace TournamentDistributionHexa.Tests.IntegrationTests;
+
+public class TournamentIntegrationTests
 {
-    public class TournamentIntegrationTests
+
+    [Fact]
+    public void CreateTournanement_With1Game_Should_Persist_1Tournoi()
     {
-
-        [Fact]
-        public void CreateTournanement_With1Game_Should_Persist_1Tournoi()
+        //Arrange
+        var options = new DbContextOptionsBuilder<RepartitionTournoiContext>()
+        .UseInMemoryDatabase(databaseName: "RepartitionTournoi")
+        .Options;
+        InitializeInMemoryDatabaseData(options);
+        using (var _context = new RepartitionTournoiContext(options))
         {
-            //Arrange
-            var options = new DbContextOptionsBuilder<RepartitionTournoiContext>()
-            .UseInMemoryDatabase(databaseName: "RepartitionTournoi")
-            .Options;
-            InitializeInMemoryDatabaseData(options);
-            using (var _context = new RepartitionTournoiContext(options))
-            {
-                ITournamentMatchRepository domain = new TournamentMatchRepositoryAdapter(_context);
-                List<Player> players = PlayerHelper.GetPlayers();
-                List<Game> games = new List<Game>() { GameHelper.Get1Game() };
-                new Player(){ID=1, Firstname = "Nicolas",Lastname="B",Telephone=""},
-                new Player(){ID=2, Firstname = "Alexandra",Lastname="F",Telephone=""},
-                new Player(){ID=3, Firstname = "Jeremy",Lastname="F",Telephone=""},
-                new Player(){ID=4, Firstname = "Ludovic",Lastname="R",Telephone=""},
-                new Player(){ID=5, Firstname = "Julien",Lastname="P",Telephone=""},
-                new Player(){ID=6, Firstname = "Nicolas",Lastname="F",Telephone=""},
-                new Player(){ID=7, Firstname = "Corentin",Lastname="C",Telephone=""},
-                new Player(){ID=8, Firstname = "Corinne",Lastname="O",Telephone=""},
-                new Player(){ID=9, Firstname = "Laura",Lastname="X",Telephone=""},
-                new Player(){ID=10, Firstname = "Noémie",Lastname="R",Telephone=""},
-                new Player(){ID=11, Firstname = "Denis",Lastname="R",Telephone=""},
-                new Player(){ID=12, Firstname = "Gabriel",Lastname="Y",Telephone=""}
-            };
-                List<Game> games = new List<Game>()
-            {
-                new Game(){ ID = 1, Name = "Ark Nova"}
-            };
-                List<TournamentMatch> matchs = new List<TournamentMatch>()
-            {
-                new TournamentMatch(games[0]){ Scores = new List<MatchScore>(){
-                    new MatchScore(players[0]),
-                    new MatchScore(players[1]),
-                    new MatchScore(players[2])
-                } },
-                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
-                    new MatchScore(players[3]),
-                    new MatchScore(players[4]),
-                    new MatchScore(players[5])
-                } },
-                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
-                    new MatchScore(players[6]),
-                    new MatchScore(players[7]),
-                    new MatchScore(players[8])
-                } },
-                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
-                    new MatchScore(players[9]),
-                    new MatchScore(players[10]),
-                    new MatchScore(players[11])
-                } }
+            ITournamentMatchRepository domain = new TournamentMatchRepositoryAdapter(_context);
+            List<Player> players = PlayerHelper.GetPlayers();
+            List<Game> games = new List<Game>() { GameHelper.Get1Game() };
 
-            };
-                //Act
-                var actualResult = domain.Create("2022-2023",matchs);
-
-                //Assert
-                Assert.True(actualResult.Count() == 4);
-                Assert.True(actualResult.SelectMany(x=>x.Scores).Count() == 12);
-            }
-        }
-
-        private static void InitializeInMemoryDatabaseData(DbContextOptions<RepartitionTournoiContext> options)
+            List<TournamentMatch> matchs = new List<TournamentMatch>()
         {
-            // Insert seed data into the database using one instance of the context
-            using (var context = new RepartitionTournoiContext(options))
-            {
-                foreach(var player in PlayerHelper.GetPlayers())
-                {
-                    context.Joueurs.Add(new Joueur() { Id = player.ID, Nom = player.Lastname, Prenom = player.Firstname, Telephone = player.Telephone });
-                }
+            new TournamentMatch(games[0]){ Scores = new List<MatchScore>(){
+                new MatchScore(players[0]),
+                new MatchScore(players[1]),
+                new MatchScore(players[2])
+            } },
+            new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                new MatchScore(players[3]),
+                new MatchScore(players[4]),
+                new MatchScore(players[5])
+            } },
+            new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                new MatchScore(players[6]),
+                new MatchScore(players[7]),
+                new MatchScore(players[8])
+            } },
+            new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                new MatchScore(players[9]),
+                new MatchScore(players[10]),
+                new MatchScore(players[11])
+            } }
 
-                foreach (var game in GameHelper.GetGames())
-                {
-                    context.Jeus.Add(new Jeu() { Id = game.ID, Nom = game.Name });
-                }
-                context.SaveChanges();
-            }
+        };
+            //Act
+            var actualResult = domain.Create("2022-2023", matchs);
+
+            //Assert
+            Assert.True(actualResult.Count() == 4);
+            Assert.True(actualResult.SelectMany(x => x.Scores).Count() == 12);
         }
     }
 
+    private void InitializeInMemoryDatabaseData(DbContextOptions<RepartitionTournoiContext> options)
+    {
+        // Insert seed data into the database using one instance of the context
+        using (var context = new RepartitionTournoiContext(options))
+        {
+            foreach (var player in PlayerHelper.GetPlayers())
+            {
+                context.Joueurs.Add(new Joueur() { Id = player.ID, Nom = player.Lastname, Prenom = player.Firstname, Telephone = player.Telephone });
+            }
+
+            foreach (var game in GameHelper.GetGames())
+            {
+                context.Jeus.Add(new Jeu() { Id = game.ID, Nom = game.Name });
+            }
+            context.SaveChanges();
+        }
+    }
 }
