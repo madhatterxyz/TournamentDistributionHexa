@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Moq;
 using TournamentDistributionHexa.Domain;
+using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Repositories;
 using TournamentDistributionHexa.Domain.Score;
@@ -92,7 +93,7 @@ namespace TournamentDistributionHexa.Tests.UnitTests
         public void GetAll_Should_Return_1_TournamentMatch()
         {
             //Arrange
-            var adapter = new Mock<ITournamentRepository>();
+            var adapter = new Mock<ITournamentMatchRepository>();
             adapter.Setup(x => x.GetAll()).Returns(new List<TournamentMatch>() {
                 new TournamentMatch(GameHelper.Get1Game()) {
                     Scores = new List<MatchScore>(){
@@ -140,10 +141,10 @@ namespace TournamentDistributionHexa.Tests.UnitTests
 
         private ITournamentDomain GetDomain()
         {
-            var adapter = new Mock<ITournamentRepository>();
+            var adapter = new Mock<ITournamentMatchRepository>();
             return new TournamentDomain(adapter.Object, GetConfiguration());
         }
-        private ITournamentDomain GetDomain(ITournamentRepository adapter)
+        private ITournamentDomain GetDomain(ITournamentMatchRepository adapter)
         {
             return new TournamentDomain(adapter, GetConfiguration());
         }

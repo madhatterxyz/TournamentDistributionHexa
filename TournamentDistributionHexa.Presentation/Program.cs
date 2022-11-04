@@ -1,6 +1,4 @@
 using TournamentDistributionHexa.Domain;
-using TournamentDistributionHexa.Domain.Repositories;
-using TournamentDistributionHexa.Domain.Tournaments;
 using TournamentDistributionHexa.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.RegisterDomainServices();
-builder.Services.RegisterInfraServices();
+builder.Services.RegisterInfraServices(builder.Configuration);
 
 var app = builder.Build();
 

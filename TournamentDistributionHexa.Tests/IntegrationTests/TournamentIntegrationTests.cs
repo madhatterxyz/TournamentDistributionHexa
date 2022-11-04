@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TournamentDistributionHexa.Domain;
+using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Tournament;
@@ -23,7 +24,7 @@ namespace TournamentDistributionHexa.Tests.IntegrationTests
             InitializeInMemoryDatabaseData(options);
             using (var _context = new RepartitionTournoiContext(options))
             {
-                ITournamentRepository domain = new TournamentRepositoryAdapter(_context);
+                ITournamentMatchRepository domain = new TournamentMatchRepositoryAdapter(_context);
                 List<Player> players = PlayerHelper.GetPlayers();
                 List<Game> games = new List<Game>() { GameHelper.Get1Game() };
                 List<TournamentMatch> matchs = new List<TournamentMatch>()

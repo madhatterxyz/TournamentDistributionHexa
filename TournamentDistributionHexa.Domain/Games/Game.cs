@@ -1,6 +1,6 @@
 ﻿using TournamentDistributionHexa.Domain.Teams;
 
-namespace TournamentDistributionHexa.Domain;
+namespace TournamentDistributionHexa.Domain.Games;
 
 public record Game
 {

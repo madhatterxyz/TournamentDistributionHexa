@@ -7,13 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TournamentDistributionHexa.Domain\TournamentDistributionHexa.Domain.csproj" />
-    <ProjectReference Include="..\TournamentDistributionHexa.Infrastructure\TournamentDistributionHexa.Infrastructure.csproj" />
+    <Compile Remove="Commands\**" />
+    <Compile Remove="Queries\**" />
+    <Content Remove="Commands\**" />
+    <Content Remove="Queries\**" />
+    <EmbeddedResource Remove="Commands\**" />
+    <EmbeddedResource Remove="Queries\**" />
+    <None Remove="Commands\**" />
+    <None Remove="Queries\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Queries\" />
+    <ProjectReference Include="..\TournamentDistributionHexa.Domain\TournamentDistributionHexa.Domain.csproj" />
+    <ProjectReference Include="..\TournamentDistributionHexa.Infrastructure\TournamentDistributionHexa.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

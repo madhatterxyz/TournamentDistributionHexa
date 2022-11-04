@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Teams;
@@ -10,9 +11,9 @@ namespace TournamentDistributionHexa.Domain.Repositories
     public class TournamentDomain : ITournamentDomain
     {
         public const int NUMBER_PLAYERS_PER_MATCH = 3;
-        private readonly ITournamentRepository _repositoryAdapter;
+        private readonly ITournamentMatchRepository _repositoryAdapter;
         private readonly IConfiguration _configuration;
-        public TournamentDomain(ITournamentRepository tournamentRepositoryAdapter, IConfiguration configuration)
+        public TournamentDomain(ITournamentMatchRepository tournamentRepositoryAdapter, IConfiguration configuration)
         {
             _repositoryAdapter = tournamentRepositoryAdapter;
             _configuration = configuration;

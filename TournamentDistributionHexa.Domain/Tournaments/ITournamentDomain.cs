@@ -1,4 +1,5 @@
-﻿using TournamentDistributionHexa.Domain.Players;
+﻿using TournamentDistributionHexa.Domain.Games;
+using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Tournament;
 
 namespace TournamentDistributionHexa.Domain.Repositories

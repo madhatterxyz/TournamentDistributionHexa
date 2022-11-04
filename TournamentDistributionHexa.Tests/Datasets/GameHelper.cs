@@ -1,4 +1,4 @@
-﻿using TournamentDistributionHexa.Domain;
+﻿using TournamentDistributionHexa.Domain.Games;
 
 namespace TournamentDistributionHexa.Tests.Datasets
 {

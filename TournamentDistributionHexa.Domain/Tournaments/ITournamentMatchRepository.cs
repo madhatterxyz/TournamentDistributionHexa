@@ -2,7 +2,7 @@
 
 namespace TournamentDistributionHexa.Domain.Tournaments
 {
-    public interface ITournamentRepository
+    public interface ITournamentMatchRepository
     {
         List<TournamentMatch> Create(string nom, IList<TournamentMatch> tournamentMatches);
         List<TournamentMatch> GetAll();

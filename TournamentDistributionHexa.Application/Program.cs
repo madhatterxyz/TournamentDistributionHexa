@@ -1,3 +1,7 @@
+using TournamentDistributionHexa.Application.Configuration;
+using TournamentDistributionHexa.Domain;
+using TournamentDistributionHexa.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.RegisterInfraServices(builder.Configuration);
+builder.Services.RegisterDomainServices();
+builder.Services.RegisterRequestHandlers();
 
 var app = builder.Build();
 
