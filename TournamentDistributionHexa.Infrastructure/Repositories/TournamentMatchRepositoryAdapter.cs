@@ -5,6 +5,7 @@ using TournamentDistributionHexa.Domain.Tournament;
 using TournamentDistributionHexa.Domain.Tournaments;
 using TournamentDistributionHexa.Infrastructure.Mappers;
 using TournamentDistributionHexa.Infrastructure.Models;
+using Tournoi = TournamentDistributionHexa.Domain.Tournament.Tournoi;
 
 namespace TournamentDistributionHexa.Infrastructure.Repositories
 {
@@ -75,6 +76,20 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
             }
             tournamentMatch.Scores = matchScores;
             return tournamentMatch;
+        }
+        public async Task<Tournoi> Update(long id, string name, DateTime startDate, DateTime endDate)
+        {
+            var tournoi = _context.Tournois.Find(id);
+            if(tournoi == null)
+            {
+                throw new KeyNotFoundException($"{id} not found in database.");
+            }
+            tournoi.Nom = name;
+            tournoi.DateDebut = startDate;
+            tournoi.DateFin = endDate;
+            _context.Attach(tournoi).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return TournamentMapper.GetTournament(tournoi);
         }
     }
 }

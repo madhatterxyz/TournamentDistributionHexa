@@ -118,6 +118,10 @@ namespace TournamentDistributionHexa.Infrastructure.Models
             {
                 entity.ToTable("Tournoi");
 
+                entity.Property(e => e.DateDebut).HasColumnType("datetime");
+
+                entity.Property(e => e.DateFin).HasColumnType("datetime");
+
                 entity.Property(e => e.Nom).HasMaxLength(50);
             });
 

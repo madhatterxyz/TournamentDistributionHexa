@@ -4,7 +4,7 @@ using TournamentDistributionHexa.Domain.Tournament;
 
 namespace TournamentDistributionHexa.Application.Tournaments.Commands
 {
-    public class EditTournamentCommand : IRequest<TournamentMatch>
+    public class EditTournamentCommand : IRequest<Tournoi>
     {
         public long Id { get;}
         public string Name { get; }

@@ -9,5 +9,6 @@ namespace TournamentDistributionHexa.Domain.Repositories
         List<TournamentMatch> Create(string nom, IList<Player> players, IList<Game> games);
         List<TournamentMatch> GetAll();
         IList<Game> GetEvenlyDistributedGames(IList<Game> games, int playerCount);
+        Task<Tournoi> Update(long id, string name, DateTime startDate, DateTime endDate);
     }
 }

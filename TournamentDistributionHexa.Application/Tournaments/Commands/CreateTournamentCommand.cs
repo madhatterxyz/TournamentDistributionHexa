@@ -6,7 +6,7 @@ using TournamentDistributionHexa.Domain.Tournament;
 
 namespace TournamentDistributionHexa.Application.Tournaments.Commands
 {
-    public class CreateTournamentCommand : IRequest<List<TournamentMatch>>
+    public class CreateTournamentCommand : IRequest<IEnumerable<TournamentMatch>>
     {
         public string Name { get; }
         public List<Player> Players { get; }

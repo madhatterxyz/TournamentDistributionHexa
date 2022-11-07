@@ -1,4 +1,7 @@
-﻿namespace TournamentDistributionHexa.Infrastructure.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace TournamentDistributionHexa.Infrastructure.Models
 {
     public partial class Joueur
     {

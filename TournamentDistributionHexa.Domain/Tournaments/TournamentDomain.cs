@@ -56,6 +56,10 @@ namespace TournamentDistributionHexa.Domain.Repositories
 
             return games;
         }
+        public async Task<Tournoi> Update(long id, string name, DateTime startDate, DateTime endDate)
+        {
+            return await _repositoryAdapter.Update(id, name, startDate, endDate);
+        }
         /// <summary>
         /// Browse the games in a tournament
         /// </summary>
