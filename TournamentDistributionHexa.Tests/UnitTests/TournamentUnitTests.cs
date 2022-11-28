@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Moq;
 using TournamentDistributionHexa.Domain;
+using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Repositories;
 using TournamentDistributionHexa.Domain.Score;

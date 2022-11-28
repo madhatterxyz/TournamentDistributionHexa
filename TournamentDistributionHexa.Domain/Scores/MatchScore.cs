@@ -4,10 +4,11 @@ namespace TournamentDistributionHexa.Domain.Score;
 
 public record MatchScore
 {
-    public MatchScore(Player player)
+    public MatchScore(Player player, int points)
     {
         Player = player;
+        Points = points;
     }
-    public int Score { get; set; }
-    public Player Player { get; }
+    public int Points { get; init; }
+    public Player Player { get; init; }
 }

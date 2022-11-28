@@ -1,5 +1,5 @@
 ﻿@page
-@model TournamentDistributionHexa.Application.Pages.Tournaments.IndexModel
+@model TournamentDistributionHexa.Presentation.Web.Pages.Scores.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -22,17 +22,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var tournoi in Model.Tournois)
+        @foreach (var game in Model.Scores.GroupBy(x=>x.Game.Name))
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => tournoi.Game.Name)
+                    @Html.DisplayFor(modelItem => game.Key)
                 </td>
                 <td>
                     <ul>
-                    @foreach(var score in tournoi.Scores)
-                    {
-                        <li>@score.Player.Lastname @score.Player.Firstname @score.Player.Telephone</li>
+                        @foreach (var score in Model.Scores.Where(x=>x.Game.Name==game.Key))
+                        {
+                            <li>@score.Player.LastName @score.Player.FirstName @score.Player.Telephone - Points : @score.Points</li>
                         }
                     </ul>
                 </td>

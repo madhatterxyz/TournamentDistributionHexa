@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TournamentDistributionHexa.Domain;
+using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Tournament;
@@ -13,42 +14,41 @@ namespace TournamentDistributionHexa.Tests.IntegrationTests;
 public class TournamentIntegrationTests
 {
 
-    [Fact]
-    public void CreateTournanement_With1Game_Should_Persist_1Tournoi()
-    {
-        //Arrange
-        var options = new DbContextOptionsBuilder<RepartitionTournoiContext>()
-        .UseInMemoryDatabase(databaseName: "RepartitionTournoi")
-        .Options;
-        InitializeInMemoryDatabaseData(options);
-        using (var _context = new RepartitionTournoiContext(options))
+        [Fact]
+        public void CreateTournanement_With1Game_Should_Persist_1Tournoi()
         {
-            ITournamentMatchRepository domain = new TournamentMatchRepositoryAdapter(_context);
-            List<Player> players = PlayerHelper.GetPlayers();
-            List<Game> games = new List<Game>() { GameHelper.Get1Game() };
-
-            List<TournamentMatch> matchs = new List<TournamentMatch>()
-        {
-            new TournamentMatch(games[0]){ Scores = new List<MatchScore>(){
-                new MatchScore(players[0]),
-                new MatchScore(players[1]),
-                new MatchScore(players[2])
-            } },
-            new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
-                new MatchScore(players[3]),
-                new MatchScore(players[4]),
-                new MatchScore(players[5])
-            } },
-            new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
-                new MatchScore(players[6]),
-                new MatchScore(players[7]),
-                new MatchScore(players[8])
-            } },
-            new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
-                new MatchScore(players[9]),
-                new MatchScore(players[10]),
-                new MatchScore(players[11])
-            } }
+            //Arrange
+            var options = new DbContextOptionsBuilder<RepartitionTournoiContext>()
+            .UseInMemoryDatabase(databaseName: "RepartitionTournoi")
+            .Options;
+            InitializeInMemoryDatabaseData(options);
+            using (var _context = new RepartitionTournoiContext(options))
+            {
+                ITournamentMatchRepository domain = new TournamentMatchRepositoryAdapter(_context);
+                List<Player> players = PlayerHelper.GetPlayers();
+                List<Game> games = new List<Game>() { GameHelper.Get1Game() };
+                List<TournamentMatch> matchs = new List<TournamentMatch>()
+            {
+                new TournamentMatch(games[0]){ Scores = new List<MatchScore>(){
+                    new MatchScore(players[0]),
+                    new MatchScore(players[1]),
+                    new MatchScore(players[2])
+                } },
+                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                    new MatchScore(players[3]),
+                    new MatchScore(players[4]),
+                    new MatchScore(players[5])
+                } },
+                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                    new MatchScore(players[6]),
+                    new MatchScore(players[7]),
+                    new MatchScore(players[8])
+                } },
+                new TournamentMatch(games[0]){  Scores = new List<MatchScore>(){
+                    new MatchScore(players[9]),
+                    new MatchScore(players[10]),
+                    new MatchScore(players[11])
+                } }
 
         };
             //Act

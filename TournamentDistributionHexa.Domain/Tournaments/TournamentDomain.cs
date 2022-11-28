@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Teams;
@@ -27,7 +28,7 @@ namespace TournamentDistributionHexa.Domain.Repositories
                     TournamentMatch tournamentMatch = new TournamentMatch(game);
                     foreach (var player in team.Players)
                     {
-                        MatchScore matchScore = new MatchScore(players[player]);
+                        MatchScore matchScore = new MatchScore(players[player],0);
                         tournamentMatch.Scores.Add(matchScore);
                     }
                     tournamentMatches.Add(tournamentMatch);
@@ -54,6 +55,10 @@ namespace TournamentDistributionHexa.Domain.Repositories
             BrowseGames(playerCount, games, counter, playerMeetings, numberOfPlayersByTeam);
 
             return games;
+        }
+        public async Task<Tournoi> Update(long id, string name, DateTime startDate, DateTime endDate)
+        {
+            return await _repositoryAdapter.Update(id, name, startDate, endDate);
         }
         /// <summary>
         /// Browse the games in a tournament

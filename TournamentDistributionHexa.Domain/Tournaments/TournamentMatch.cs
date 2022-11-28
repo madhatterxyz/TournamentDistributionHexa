@@ -1,4 +1,5 @@
-﻿using TournamentDistributionHexa.Domain.Score;
+﻿using TournamentDistributionHexa.Domain.Games;
+using TournamentDistributionHexa.Domain.Score;
 
 namespace TournamentDistributionHexa.Domain.Tournament;
 
