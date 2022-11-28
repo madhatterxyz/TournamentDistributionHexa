@@ -1,10 +1,14 @@
 using TournamentDistributionHexa.Domain;
 using TournamentDistributionHexa.Infrastructure;
+using TournamentDistributionHexa.Presentation.Web.Services;
+using TournamentDistributionHexa.Presentation.Web.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<ITournamentServices, TournamentServices>();
+builder.Services.AddScoped<IScoreServices, ScoreServices>();
 builder.Services.RegisterDomainServices();
 builder.Services.RegisterInfraServices(builder.Configuration);
 

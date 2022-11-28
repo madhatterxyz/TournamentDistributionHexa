@@ -1,0 +1,42 @@
+﻿@page
+@model TournamentDistributionHexa.Presentation.Web.Pages.Scores.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Game
+            </th>
+            <th>
+                Scores
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model.Scores.GroupBy(x=>x.Game.Name))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => game.Key)
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var score in Model.Scores.Where(x=>x.Game.Name==game.Key))
+                        {
+                            <li>@score.Player.LastName @score.Player.FirstName @score.Player.Telephone - Points : @score.Points</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

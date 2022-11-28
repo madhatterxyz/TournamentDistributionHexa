@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Tournaments list</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,28 +14,33 @@
     <thead>
         <tr>
             <th>
-                Game
+                Name
             </th>
             <th>
-                Scores
+                Start date
+            </th>
+            <th>
+                End date
+            </th>
+            <th>
+                
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var tournoi in Model.Tournois)
+        @foreach (var tournament in Model.Tournaments)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => tournoi.Game.Name)
+                    @Html.DisplayFor(modelItem => tournament.Name)
                 </td>
                 <td>
-                    <ul>
-                    @foreach(var score in tournoi.Scores)
-                    {
-                        <li>@score.Player.Lastname @score.Player.Firstname @score.Player.Telephone</li>
-                        }
-                    </ul>
+                    @Html.DisplayFor(modelItem => tournament.StartDate)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tournament.EndDate)
+                </td>
+                <td><a asp-page="/Scores/Index" asp-route-tournamentId="@tournament.Id">Details</a></td>
             </tr>
         }
     </tbody>

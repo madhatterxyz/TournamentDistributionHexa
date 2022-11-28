@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.Infrastructure", "TournamentDistributionHexa.Infrastructure\TournamentDistributionHexa.Infrastructure.csproj", "{56EA31F2-2F42-4D9A-95CA-A460D41CD60F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.Presentation", "TournamentDistributionHexa.Presentation\TournamentDistributionHexa.Presentation.csproj", "{616EA1D3-7856-4ABF-9B99-2AE11885A775}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.Presentation.Web", "TournamentDistributionHexa.Presentation\TournamentDistributionHexa.Presentation.Web.csproj", "{616EA1D3-7856-4ABF-9B99-2AE11885A775}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentDistributionHexa.Tests", "TournamentDistributionHexa.Tests\TournamentDistributionHexa.Tests.csproj", "{B137EBE4-B77C-476C-AEA4-9D1497BC63A0}"
 EndProject

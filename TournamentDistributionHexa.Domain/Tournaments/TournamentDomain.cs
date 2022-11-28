@@ -28,7 +28,7 @@ namespace TournamentDistributionHexa.Domain.Repositories
                     TournamentMatch tournamentMatch = new TournamentMatch(game);
                     foreach (var player in team.Players)
                     {
-                        MatchScore matchScore = new MatchScore(players[player]);
+                        MatchScore matchScore = new MatchScore(players[player],0);
                         tournamentMatch.Scores.Add(matchScore);
                     }
                     tournamentMatches.Add(tournamentMatch);
