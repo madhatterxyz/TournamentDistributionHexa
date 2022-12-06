@@ -1,20 +1,17 @@
 ﻿namespace TournamentDistributionHexa.Domain.Scores;
 
-public class ScoreDTO
+public class Score
 {
-    public ScoreDTO()
+    public Score()
     {
 
     }
-    public ScoreDTO(long matchId, long joueurId, int points)
+    public Score(ScoreId scoreId, int points)
     {
-        MatchId = matchId;
-        JoueurId = joueurId;
+        ScoreId = scoreId;
         Points = points;
     }
-
-    public long MatchId { get; set; }
-    public long JoueurId { get; set; }
+    public ScoreId ScoreId { get; }
     public int Points { get; set; }
 
 }

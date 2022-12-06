@@ -3,7 +3,6 @@ using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Players;
 using TournamentDistributionHexa.Domain.Score;
 using TournamentDistributionHexa.Domain.Teams;
-using TournamentDistributionHexa.Domain.Tournament;
 using TournamentDistributionHexa.Domain.Tournaments;
 
 namespace TournamentDistributionHexa.Domain.Repositories
@@ -18,10 +17,20 @@ namespace TournamentDistributionHexa.Domain.Repositories
             _repositoryAdapter = tournamentRepositoryAdapter;
             _configuration = configuration;
         }
-        public List<TournamentMatch> Create(string nom, IList<Player> players, IList<Game> games)
+        public List<TournamentMatch> Create(string nom, IList<int> playerIds, IList<int> gameIds)
         {
             var tournamentMatches = new List<TournamentMatch>();
-            foreach (var game in GetEvenlyDistributedGames(games, players.Count))
+            List<Player> players = new List<Player>();
+            foreach(int playerId in playerIds)
+            {
+                players.Add(new Player(new PlayerId(playerId), String.Empty, String.Empty, String.Empty));
+            }
+            List<Game> games = new List<Game>();
+            foreach(int gameId in gameIds)
+            {
+                games.Add(new Game(new GameId(gameId), String.Empty));
+            }
+            foreach (var game in GetEvenlyDistributedGames(games, playerIds.Count))
             {
                 foreach (var team in game.Teams)
                 {

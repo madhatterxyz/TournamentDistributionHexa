@@ -12,7 +12,7 @@ namespace TournamentDistributionHexa.Application.Models.Requests
         [Required]
         public long MatchId { get; set; }
         [Required]
-        public long JoueurId { get; set; }
+        public long PlayerId { get; set; }
         [Required]
         public int Points { get; set; }
     }

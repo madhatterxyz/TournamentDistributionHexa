@@ -2,7 +2,7 @@
 using TournamentDistributionHexa.Application.Models.Requests;
 using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Players;
-using TournamentDistributionHexa.Domain.Tournament;
+using TournamentDistributionHexa.Domain.Tournaments;
 
 namespace TournamentDistributionHexa.Application.Commands
 {
@@ -11,15 +11,16 @@ namespace TournamentDistributionHexa.Application.Commands
         public string Name { get; }
         public DateTime StartDate { get; }
         public DateTime EndDate { get; }
-        public List<Player> Players { get; }
-        public List<Game> Games { get; }
+        public List<int> Players { get; }
+        public List<int> Games { get; }
         public CreateTournamentCommand(CreateTournamentRequest request)
         {
             Name = request.Name;
-            Players = request.Players;
-            Games = request.Games;
+            Players =  request.PlayerIds;
+            Games =  request.GameIds;
             StartDate = request.StartDate;
             EndDate = request.EndDate;
         }
+
     }
 }

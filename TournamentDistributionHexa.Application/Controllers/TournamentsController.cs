@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TournamentDistributionHexa.Application.Commands;
 using TournamentDistributionHexa.Application.Models.Requests;
+using TournamentDistributionHexa.Application.Models.Responses;
 using TournamentDistributionHexa.Application.Queries;
-using TournamentDistributionHexa.Domain.Tournament;
+using TournamentDistributionHexa.Domain.Tournaments;
 
 namespace TournamentDistributionHexa.Application.Controllers
 {
@@ -31,6 +32,13 @@ namespace TournamentDistributionHexa.Application.Controllers
         public async Task<IActionResult> GetScoresByTournamentId(long id)
         {
             return Ok(await _mediator.Send(new GetTournamentScoresQuery(id)));
+        }
+        [HttpGet]
+        [Route("{id}/Scores/Players/{playerId}")]
+        [ProducesResponseType(typeof(List<GetScoreResponse>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetScoresByTournamentIdAndPlayerId(long id, long playerId)
+        {
+            return Ok(await _mediator.Send(new GetTournamentScoresByPlayerQuery(id, playerId)));
         }
         [HttpPost]
         [ProducesResponseType(typeof(List<TournamentMatch>), (int)HttpStatusCode.Created)]

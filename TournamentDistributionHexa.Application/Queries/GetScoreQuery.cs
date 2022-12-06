@@ -3,7 +3,7 @@ using TournamentDistributionHexa.Domain.Scores;
 
 namespace TournamentDistributionHexa.Application.Queries
 {
-    public class GetScoreQuery : IRequest<ScoreDTO>
+    public class GetScoreQuery : IRequest<Score>
     {
         public long MatchId { get; }
         public long JoueurId { get; }

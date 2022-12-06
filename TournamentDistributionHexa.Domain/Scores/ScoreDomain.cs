@@ -8,7 +8,7 @@ public class ScoreDomain : IScoreDomain
         _scoreRepository = scoreRepository;
     }
 
-    public async Task<ScoreDTO> Update(ScoreDTO scoreDTO)
+    public async Task<Score> Update(Score scoreDTO)
     {
         return await _scoreRepository.Update(scoreDTO);
     }

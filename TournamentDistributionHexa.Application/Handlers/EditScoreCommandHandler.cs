@@ -4,7 +4,7 @@ using TournamentDistributionHexa.Domain.Scores;
 
 namespace TournamentDistributionHexa.Application.Handlers
 {
-    public class EditScoreCommandHandler : IRequestHandler<EditScoreCommand, ScoreDTO>
+    public class EditScoreCommandHandler : IRequestHandler<EditScoreCommand, Score>
     {
         private readonly IScoreDomain _scoreDomain;
 
@@ -13,10 +13,10 @@ namespace TournamentDistributionHexa.Application.Handlers
             _scoreDomain = scoreDomain;
         }
 
-        public async Task<ScoreDTO> Handle(EditScoreCommand request, CancellationToken cancellationToken)
+        public async Task<Score> Handle(EditScoreCommand request, CancellationToken cancellationToken)
         {
 
-            return await _scoreDomain.Update(new ScoreDTO(request.MatchId, request.JoueurId, request.Points));
+            return await _scoreDomain.Update(new Score(new ScoreId(request.MatchId, request.JoueurId), request.Points));
         }
     }
 }

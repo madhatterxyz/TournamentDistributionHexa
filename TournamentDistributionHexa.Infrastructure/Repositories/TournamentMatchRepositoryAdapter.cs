@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Score;
-using TournamentDistributionHexa.Domain.Tournament;
 using TournamentDistributionHexa.Domain.Tournaments;
 using TournamentDistributionHexa.Infrastructure.Mappers;
 using TournamentDistributionHexa.Infrastructure.Models;
-using Tournoi = TournamentDistributionHexa.Domain.Tournament.Tournoi;
 
 namespace TournamentDistributionHexa.Infrastructure.Repositories
 {
@@ -46,20 +44,20 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
 
         private List<int> GetJoueurIds(IList<TournamentMatch> tournamentMatchs, int i)
         {
-            return _context.Joueurs.Where(x => tournamentMatchs[i].Scores.Select(y => y.Player.ID).Contains((int)x.Id)).Select(x => (int)x.Id).ToList();
+            return _context.Joueurs.Where(x => tournamentMatchs[i].Scores.Select(y => y.Player.PlayerId.Id).Contains((int)x.Id)).Select(x => (int)x.Id).ToList();
         }
 
         private void SaveComposition(IList<TournamentMatch> tournamentMatchs, Models.Tournoi tournoi, int i, Match match)
         {
-            Composition composition = new Composition() { JeuId = tournamentMatchs[i].Game.ID, MatchId = match.Id, TournoiId = tournoi.Id };
+            Composition composition = new Composition() { JeuId = tournamentMatchs[i].Game.GameId.ID, MatchId = match.Id, TournoiId = tournoi.Id };
             _context.Compositions.Add(composition);
         }
 
         public List<TournamentMatch> GetAll()
         {
             List<TournamentMatch> result = new List<TournamentMatch>();
-            var tournois = _context.Tournois.SelectMany(x => x.Compositions).Include(x=>x.Jeu).Include(x=>x.Match).ThenInclude(x=>x.Scores).ThenInclude(x=>x.Joueur);
-            foreach(var tournoi in tournois)
+            var tournois = _context.Tournois.SelectMany(x => x.Compositions).Include(x => x.Jeu).Include(x => x.Match).ThenInclude(x => x.Scores).ThenInclude(x => x.Joueur);
+            foreach (var tournoi in tournois)
             {
                 result.Add(GetTournamentMatch(tournoi));
             }
@@ -68,7 +66,7 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
 
         private TournamentMatch GetTournamentMatch(Composition composition)
         {
-            TournamentMatch tournamentMatch = new TournamentMatch(new Game( (int)composition.JeuId, composition.Jeu.Nom ));
+            TournamentMatch tournamentMatch = new TournamentMatch(new Game(new GameId((int)composition.JeuId), composition.Jeu.Nom));
             List<MatchScore> matchScores = new List<MatchScore>();
             foreach (var score in composition.Match.Scores)
             {
@@ -77,10 +75,10 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
             tournamentMatch.Scores = matchScores;
             return tournamentMatch;
         }
-        public async Task<Tournoi> Update(long id, string name, DateTime startDate, DateTime endDate)
+        public async Task<Domain.Tournaments.Tournoi> Update(long id, string name, DateTime startDate, DateTime endDate)
         {
             var tournoi = _context.Tournois.Find(id);
-            if(tournoi == null)
+            if (tournoi == null)
             {
                 throw new KeyNotFoundException($"{id} not found in database.");
             }
@@ -89,7 +87,7 @@ namespace TournamentDistributionHexa.Infrastructure.Repositories
             tournoi.DateFin = endDate;
             _context.Attach(tournoi).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return TournamentMapper.GetTournament(tournoi);
+            return TournamentMapper.Map(tournoi);
         }
     }
 }

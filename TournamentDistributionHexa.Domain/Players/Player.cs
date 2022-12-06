@@ -2,14 +2,14 @@
 
 public record Player
 {
-    public Player(int id, string firstname, string lastname, string telephone)
+    public Player(PlayerId id, string firstname, string lastname, string telephone)
     {
-        ID = id;
+        PlayerId = id;
         Firstname = firstname;
         Lastname = lastname;
         Telephone = telephone;
     }
-    public int ID { get; }
+    public PlayerId PlayerId { get; }
     public string Firstname { get; }
     public string Lastname { get; }
     public string Telephone { get; }

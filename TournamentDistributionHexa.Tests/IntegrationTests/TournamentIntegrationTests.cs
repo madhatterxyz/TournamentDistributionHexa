@@ -67,12 +67,12 @@ public class TournamentIntegrationTests
         {
             foreach (var player in PlayerHelper.GetPlayers())
             {
-                context.Joueurs.Add(new Joueur() { Id = player.ID, Nom = player.Lastname, Prenom = player.Firstname, Telephone = player.Telephone });
+                context.Joueurs.Add(new Joueur() { Id = player.PlayerId, Nom = player.Lastname, Prenom = player.Firstname, Telephone = player.Telephone });
             }
 
             foreach (var game in GameHelper.GetGames())
             {
-                context.Jeus.Add(new Jeu() { Id = game.ID, Nom = game.Name });
+                context.Jeus.Add(new Jeu() { Id = game.GameId, Nom = game.Name });
             }
             context.SaveChanges();
         }

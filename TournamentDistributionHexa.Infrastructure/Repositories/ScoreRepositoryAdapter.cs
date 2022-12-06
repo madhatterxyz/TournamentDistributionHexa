@@ -13,18 +13,18 @@ public class ScoreRepositoryAdapter : IScoreRepository
         _dbContext = dbContext;
     }
 
-    public async Task<ScoreDTO> Create(ScoreDTO scoreDTO)
+    public async Task<Domain.Scores.Score> Create(Domain.Scores.Score scoreDTO)
     {
-        Score score = ScoreMapper.Map(scoreDTO);
+        Models.Score score = ScoreMapper.Map(scoreDTO);
         _dbContext.Scores.Add(score);
         await _dbContext.SaveChangesAsync();
         return ScoreMapper.Map(score);
     }
 
 
-    public async Task<ScoreDTO> Update(ScoreDTO scoreDTO)
+    public async Task<Domain.Scores.Score> Update(Domain.Scores.Score scoreDTO)
     {
-        Score score = ScoreMapper.Map(scoreDTO);
+        Models.Score score = ScoreMapper.Map(scoreDTO);
         _dbContext.Attach(score).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync();
         return ScoreMapper.Map(score);

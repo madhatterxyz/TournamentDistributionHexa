@@ -2,5 +2,5 @@
 
 public interface IScoreDomain
 {
-    Task<ScoreDTO> Update(ScoreDTO score);
+    Task<Score> Update(Score score);
 }

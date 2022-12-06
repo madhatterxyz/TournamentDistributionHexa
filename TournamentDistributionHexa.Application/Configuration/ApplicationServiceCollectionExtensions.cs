@@ -19,7 +19,7 @@ namespace TournamentDistributionHexa.Application.Configuration
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
                 .AddSingleton<IRequestHandler<GetAllTournamentsQuery, IEnumerable<GetTournamentResponse>>, GetAllTournamentsQueryHandler>()
                 .AddSingleton<IRequestHandler<GetTournamentScoresQuery, IEnumerable<GetScoreResponse>>,GetTournamentScoresQueryHandler>()
-                .AddSingleton<IRequestHandler<GetScoreQuery, ScoreDTO>, GetScoreQueryHandler>(); 
+                .AddSingleton<IRequestHandler<GetScoreQuery, Score>, GetScoreQueryHandler>(); 
 
         }
     }

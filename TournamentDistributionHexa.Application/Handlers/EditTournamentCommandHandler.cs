@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TournamentDistributionHexa.Application.Commands;
 using TournamentDistributionHexa.Domain.Repositories;
-using TournamentDistributionHexa.Domain.Tournament;
+using TournamentDistributionHexa.Domain.Tournaments;
 
 namespace TournamentDistributionHexa.Application.Handlers
 {

@@ -1,10 +1,11 @@
-﻿namespace TournamentDistributionHexa.Infrastructure.Mappers
+﻿using TournamentDistributionHexa.Domain.Tournaments;
+
+namespace TournamentDistributionHexa.Infrastructure.Mappers;
+
+public static class TournamentMapper
 {
-    public static class TournamentMapper
+    public static Tournoi Map(Models.Tournoi tournoi)
     {
-        public static Domain.Tournament.Tournoi GetTournament(Models.Tournoi tournoi)
-        {
-            return new Domain.Tournament.Tournoi((int)tournoi.Id, tournoi.Nom, tournoi.DateDebut, tournoi.DateFin);
-        }
+        return new Tournoi(new TournamentId((int)tournoi.Id), tournoi.Nom, tournoi.DateDebut, tournoi.DateFin);
     }
 }

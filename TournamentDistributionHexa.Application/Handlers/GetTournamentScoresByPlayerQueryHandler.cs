@@ -6,16 +6,16 @@ using TournamentDistributionHexa.Domain.Configuration.Data;
 
 namespace TournamentDistributionHexa.Application.Handlers
 {
-    public class GetTournamentScoresQueryHandler : IRequestHandler<GetTournamentScoresQuery, IEnumerable<GetScoreResponse>>
+    public class GetTournamentScoresByPlayerQueryHandler : IRequestHandler<GetTournamentScoresByPlayerQuery, IEnumerable<GetScoreResponse>>
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-        public GetTournamentScoresQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
+        public GetTournamentScoresByPlayerQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public async Task<IEnumerable<GetScoreResponse>> Handle(GetTournamentScoresQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetScoreResponse>> Handle(GetTournamentScoresByPlayerQuery request, CancellationToken cancellationToken)
         {
             List<GetScoreResponse> getScoreResponses = new List<GetScoreResponse>();
             var connection = _sqlConnectionFactory.GetOpenConnection();
@@ -37,8 +37,9 @@ namespace TournamentDistributionHexa.Application.Handlers
                                 INNER JOIN [dbo].[Joueur] as j ON j.Id = s.JoueurId 
                                 INNER JOIN [dbo].[Composition] as c ON c.MatchId = m.Id 
                                 INNER JOIN [dbo].[Jeu] as jeu ON jeu.Id = c.JeuId
-                               WHERE c.TournoiId = @TournamentId";
-            foreach (var line in await connection.QueryAsync(sql, new { request.TournamentId }))
+                               WHERE c.TournoiId = @TournamentId
+                                AND j.Id = @PlayerId";
+            foreach (var line in await connection.QueryAsync(sql, new { request.TournamentId, request.PlayerId }))
             {
                 GetGameResponse getGameResponse = new GetGameResponse((long)line.JeuId, (string)line.JeuNom);
                 GetMatchResponse getMatchResponse = new GetMatchResponse((long)line.MatchId, (string)line.MatchNom, (DateTime?)line.DateFin);

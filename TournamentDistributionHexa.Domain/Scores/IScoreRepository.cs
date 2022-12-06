@@ -4,6 +4,6 @@ namespace TournamentDistributionHexa.Domain.Scores;
 
 public interface IScoreRepository
 {
-    Task<ScoreDTO> Create(ScoreDTO score);
-    Task<ScoreDTO> Update(ScoreDTO score);
+    Task<Score> Create(Score score);
+    Task<Score> Update(Score score);
 }

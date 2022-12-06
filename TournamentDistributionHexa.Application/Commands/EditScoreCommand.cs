@@ -4,7 +4,7 @@ using TournamentDistributionHexa.Domain.Scores;
 
 namespace TournamentDistributionHexa.Application.Commands
 {
-    public class EditScoreCommand : IRequest<ScoreDTO>
+    public class EditScoreCommand : IRequest<Score>
     {
         public long MatchId { get;}
         public long JoueurId { get; }
@@ -12,7 +12,7 @@ namespace TournamentDistributionHexa.Application.Commands
         public EditScoreCommand(EditScoreRequest request)
         {
             MatchId = request.MatchId;
-            JoueurId = request.JoueurId;
+            JoueurId = request.PlayerId;
             Points = request.Points;
         }
     }

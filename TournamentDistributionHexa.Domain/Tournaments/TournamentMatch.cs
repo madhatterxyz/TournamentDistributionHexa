@@ -1,7 +1,7 @@
 ﻿using TournamentDistributionHexa.Domain.Games;
 using TournamentDistributionHexa.Domain.Score;
 
-namespace TournamentDistributionHexa.Domain.Tournament;
+namespace TournamentDistributionHexa.Domain.Tournaments;
 
 public record TournamentMatch
 {

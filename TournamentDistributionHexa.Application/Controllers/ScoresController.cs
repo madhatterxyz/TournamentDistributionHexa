@@ -22,13 +22,13 @@ namespace TournamentDistributionHexa.Application.Controllers
 
         [HttpGet]
         [Route("{matchId}")]
-        [ProducesResponseType(typeof(ScoreDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Score), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(long matchId, long joueurId)
         {
             return Ok(await _mediator.Send(new GetScoreQuery(matchId, joueurId)));
         }
         [HttpPut]
-        [ProducesResponseType(typeof(ScoreDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Score), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Update([FromBody] EditScoreRequest scoreRequest)
         {
             return Ok(await _mediator.Send(new EditScoreCommand(scoreRequest)));

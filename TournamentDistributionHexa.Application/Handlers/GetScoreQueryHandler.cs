@@ -6,7 +6,7 @@ using TournamentDistributionHexa.Domain.Scores;
 
 namespace TournamentDistributionHexa.Application.Handlers
 {
-    public class GetScoreQueryHandler : IRequestHandler<GetScoreQuery, ScoreDTO>
+    public class GetScoreQueryHandler : IRequestHandler<GetScoreQuery, Score>
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
@@ -15,7 +15,7 @@ namespace TournamentDistributionHexa.Application.Handlers
             this._sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public async Task<ScoreDTO> Handle(GetScoreQuery request, CancellationToken cancellationToken)
+        public async Task<Score> Handle(GetScoreQuery request, CancellationToken cancellationToken)
         {
             var connection = this._sqlConnectionFactory.GetOpenConnection();
             const string sql = "SELECT " +
@@ -23,7 +23,7 @@ namespace TournamentDistributionHexa.Application.Handlers
                                "s.[JoueurId], " +
                                "s.[Points]"+
                                "FROM [dbo].[Score] AS s";
-            return await connection.QueryFirstAsync<ScoreDTO>(sql);
+            return await connection.QueryFirstAsync<Score>(sql);
         }
     }
 }

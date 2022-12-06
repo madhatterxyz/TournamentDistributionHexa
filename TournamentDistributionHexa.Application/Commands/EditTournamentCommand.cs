@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using TournamentDistributionHexa.Application.Models.Requests;
-using TournamentDistributionHexa.Domain.Tournament;
+using TournamentDistributionHexa.Domain.Tournaments;
 
 namespace TournamentDistributionHexa.Application.Commands
 {

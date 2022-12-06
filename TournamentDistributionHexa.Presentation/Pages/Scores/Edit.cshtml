@@ -7,18 +7,18 @@
 
 <h1>Edit</h1>
 
-<h4>TournoiDTO</h4>
+<h4>Score</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Score.JoueurId" />
-            <input type="hidden" asp-for="Score.MatchId" />
+            <input type="hidden" asp-for="ScoreRequest.PlayerId" />
+            <input type="hidden" asp-for="ScoreRequest.MatchId" />
             <div class="form-group">
-                <label asp-for="Score.Points" class="control-label"></label>
-                <input asp-for="Score.Points" class="form-control" />
-                <span asp-validation-for="Score.Points" class="text-danger"></span>
+                <label asp-for="ScoreRequest.Points" class="control-label"></label>
+                <input asp-for="ScoreRequest.Points" class="form-control" />
+                <span asp-validation-for="ScoreRequest.Points" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

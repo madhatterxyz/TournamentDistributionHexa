@@ -2,7 +2,7 @@
 using TournamentDistributionHexa.Application.Commands;
 using TournamentDistributionHexa.Application.Validators;
 using TournamentDistributionHexa.Domain.Repositories;
-using TournamentDistributionHexa.Domain.Tournament;
+using TournamentDistributionHexa.Domain.Tournaments;
 
 namespace TournamentDistributionHexa.Application.Handlers
 {

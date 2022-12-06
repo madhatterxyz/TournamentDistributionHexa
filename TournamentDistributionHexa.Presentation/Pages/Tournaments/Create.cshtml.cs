@@ -1,30 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TournamentDistributionHexa.Application.Models.Requests;
-using TournamentDistributionHexa.Presentation.Web.Mappers;
 using TournamentDistributionHexa.Presentation.Web.Services.Interfaces;
 
-namespace TournamentDistributionHexa.Presentation.Web.Pages.Scores
+namespace TournamentDistributionHexa.Presentation.Web.Pages.Tournaments
 {
-    public class EditModel : PageModel
+    public class CreateModel : PageModel
     {
-        private readonly IScoreServices _services;
+        private readonly ITournamentServices _services;
 
-        public EditModel(IScoreServices services)
+        public CreateModel(ITournamentServices services)
         {
             _services = services;
         }
 
         [BindProperty]
-        public EditScoreRequest ScoreRequest { get; set; } = default!;
+        public CreateTournamentRequest Tournament { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(long matchId, long joueurId)
+        public async Task<IActionResult> OnGetAsync()
         {
-            ScoreRequest = ScoreModelMapper.Map(await _services.GetById(matchId, joueurId));
-            if (ScoreRequest == null)
-            {
-                return NotFound();
-            }
             return Page();
         }
 
@@ -37,7 +31,7 @@ namespace TournamentDistributionHexa.Presentation.Web.Pages.Scores
             {
                 return Page();
             }
-            await _services.Update(ScoreRequest);
+            await _services.Create(Tournament);
 
             return RedirectToPage("/Tournois/Index");
         }
